@@ -10,7 +10,7 @@
 		<property name="parent" ref="global.scope" />
 		<property name="context" ref="web.context" />
 		<property name="handler" ref="web.handler" />
-		<property name="contextPath" value="/media" />
+		<property name="contextPath" value="/netcare-streaming" />
 		<property name="virtualHosts" value="*, localhost, localhost:8088, 127.0.0.1:8088" />
 	</bean>
 
