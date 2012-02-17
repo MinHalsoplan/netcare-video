@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+
+<% render("header.ssp", Map("title" -> "Netcare Video")) %>
+
+<body>
+	${unescape(body)}
+</body>
+</html>

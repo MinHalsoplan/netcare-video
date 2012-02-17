@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>swf</packaging>
+  <artifactId>netcare-flex-client</artifactId>
+  <name>Netcare Flex Client</name>
+  
+  <description>
+  	A flex application that connects and consumes/published video. 
+  	Intended to be included in a regular web application.
+  </description>
+  
+  <parent>
+  	<groupId>org.callistasoftware.netcare.video</groupId>
+  	<artifactId>netcare-video</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>com.adobe.flex.framework</groupId>
+  		<artifactId>flex-framework</artifactId>
+  		<version>4.5.1.21328</version>
+  		<type>pom</type>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.adobe.flex.framework</groupId>
+  		<artifactId>playerglobal</artifactId>
+  		<version>4.5.1.21328</version>
+  		<classifier>10.2</classifier>
+  		<type>swc</type>
+  	</dependency>
+  </dependencies>
+  
+  <build>
+  	<sourceDirectory>src/main/flex</sourceDirectory>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.sonatype.flexmojos</groupId>
+  			<artifactId>flexmojos-maven-plugin</artifactId>
+  			<version>4.0-RC2</version>
+  			<extensions>true</extensions>
+  			<dependencies>
+  				<dependency>
+  					<groupId>com.adobe.flex</groupId>
+  					<artifactId>compiler</artifactId>
+  					<version>4.5.1.21328</version>
+  					<type>pom</type>
+  				</dependency>   				
+  			</dependencies>
+  		</plugin>
+  	</plugins>
+  	<pluginManagement>
+  		<plugins>
+  			<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+  			<plugin>
+  				<groupId>org.eclipse.m2e</groupId>
+  				<artifactId>lifecycle-mapping</artifactId>
+  				<version>1.0.0</version>
+  				<configuration>
+  					<lifecycleMappingMetadata>
+  						<pluginExecutions>
+  							<pluginExecution>
+  								<pluginExecutionFilter>
+  									<groupId>
+  										org.sonatype.flexmojos
+  									</groupId>
+  									<artifactId>
+  										flexmojos-maven-plugin
+  									</artifactId>
+  									<versionRange>
+  										[4.0-RC2,)
+  									</versionRange>
+  									<goals>
+  										<goal>test-compile</goal>
+  										<goal>compile-swc</goal>
+  										<goal>compile-swf</goal>
+  									</goals>
+  								</pluginExecutionFilter>
+  								<action>
+  									<ignore></ignore>
+  								</action>
+  							</pluginExecution>
+  						</pluginExecutions>
+  					</lifecycleMappingMetadata>
+  				</configuration>
+  			</plugin>
+  		</plugins>
+  	</pluginManagement>
+  </build>
+  
+  <pluginRepositories>
+  	<pluginRepository>
+  		<id>flexmojos-plugin-repository</id>
+  		<url>http://repository.sonatype.org/content/groups/flexgroup/</url>
+  	</pluginRepository>
+  </pluginRepositories>
+  
+  <repositories>
+  	<repository>
+  		<id>flexmojos-repository</id>
+  		<url>http://repository.sonatype.org/content/groups/flexgroup/</url>
+  	</repository>
+  </repositories>
+</project>

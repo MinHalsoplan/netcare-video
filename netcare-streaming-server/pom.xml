@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>netcare-streaming-server</artifactId>
+  <packaging>war</packaging>
+  <name>Netcare Streaming Server</name>
+  
+  <parent>
+  	<groupId>org.callistasoftware.netcare.video</groupId>
+  	<artifactId>netcare-video</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>org.red5</groupId>
+  		<artifactId>red5-server</artifactId>
+  		<version>1.0.0-RC1</version>
+  	</dependency>
+  </dependencies>
+  
+</project>
