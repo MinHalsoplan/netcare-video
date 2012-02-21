@@ -26,7 +26,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	
 	<context:annotation-config />
-	<context:property-placeholder location="classpath:/video.properties"/>
+	<context:property-placeholder location="classpath:/database.properties, classpath:/video.properties"/>
 	
 	<import resource="netcare-video-common-config.xml"/>
 	

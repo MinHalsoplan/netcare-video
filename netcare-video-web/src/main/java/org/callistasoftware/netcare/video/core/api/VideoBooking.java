@@ -2,6 +2,7 @@ package org.callistasoftware.netcare.video.core.api;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public interface VideoBooking extends Serializable {
 
@@ -28,4 +29,10 @@ public interface VideoBooking extends Serializable {
 	 * @return
 	 */
 	boolean isStarted();
+	
+	/**
+	 * Get the participants of this video meeting
+	 * @return
+	 */
+	List<VideoParticipant> getParticipants();
 }

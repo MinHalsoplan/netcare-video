@@ -1,5 +1,6 @@
 package org.callistasoftware.netcare.video.model.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,21 +26,25 @@ public class VideoBookingEntity {
 	
 	@Column(nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date start;
+	private Date startDateTime;
 	
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date end;
+	private Date endDateTime;
 	
 	@Column
 	private boolean started;
 	
 	@OneToMany(mappedBy="booking", cascade={ CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval=true, fetch=FetchType.LAZY)
-	private List<VideoBookingParticipantEntity> participants;
+	private List<VideoParticipantEntity> participants;
 
+	VideoBookingEntity() {}
+	
 	VideoBookingEntity(final Date start) {
-		this.setStart(start);
+		this.setParticipants(new ArrayList<VideoParticipantEntity>());
+		this.setStartDateTime(start);
 		this.setStarted(false);
+		this.setEndDateTime(new Date(start.getTime() + (60000 * 60)));
 	}
 	
 	public static VideoBookingEntity newEntity(final Date start) {
@@ -54,20 +59,20 @@ public class VideoBookingEntity {
 		this.id = id;
 	}
 
-	public Date getStart() {
-		return start;
+	public Date getStartDateTime() {
+		return startDateTime;
 	}
 
-	void setStart(Date start) {
-		this.start = start;
+	void setStartDateTime(Date start) {
+		this.startDateTime = start;
 	}
 
-	public Date getEnd() {
-		return end;
+	public Date getEndDateTime() {
+		return endDateTime;
 	}
 
-	void setEnd(Date end) {
-		this.end = end;
+	void setEndDateTime(Date end) {
+		this.endDateTime = end;
 	}
 
 	public boolean isStarted() {
@@ -79,14 +84,14 @@ public class VideoBookingEntity {
 	}
 	
 	public void addParticipant(final UserEntity user, final boolean owner) {
-		this.getParticipants().add(new VideoBookingParticipantEntity(this, user, owner));
+		this.getParticipants().add(new VideoParticipantEntity(this, user, owner));
 	}
 	
-	public List<VideoBookingParticipantEntity> getParticipants() {
+	public List<VideoParticipantEntity> getParticipants() {
 		return this.participants;
 	}
 	
-	void setVideoBookingParticipants(final List<VideoBookingParticipantEntity> participants) {
+	void setParticipants(final List<VideoParticipantEntity> participants) {
 		this.participants = participants;
 	}
 }

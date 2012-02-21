@@ -1,38 +1,62 @@
 package org.callistasoftware.netcare.video.model.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="video_booking_user")
-public class VideoBookingParticipantEntity {
+public class VideoParticipantEntity {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 
-	@Column
+	@Column(nullable=false)
 	private String stream;
 	
 	@Column
 	private boolean owner;
 	
-	@ManyToOne
+	@Column
+	private boolean connected;
+	
+	@ManyToOne(optional=false)
 	private VideoBookingEntity booking;
 	
-	@OneToOne
+	@OneToOne(optional=false)
 	private UserEntity user;
 	
-	VideoBookingParticipantEntity(final VideoBookingEntity booking, final UserEntity user, final boolean owner) {
+	VideoParticipantEntity() {}
+	
+	VideoParticipantEntity(final VideoBookingEntity booking, final UserEntity user, final boolean owner) {
 		this.setBooking(booking);
 		this.setUser(user);
 		this.setOwner(owner);
+		
+		this.setStream(UUID.randomUUID().toString());
+	}
+	
+	public Long getId() {
+		return this.id;
+	}
+	
+	void setId(final Long id) {
+		this.id = id;
 	}
 
 	public String getStream() {
 		return stream;
 	}
 
-	public void setStream(String stream) {
+	void setStream(String stream) {
 		this.stream = stream;
 	}
 
@@ -58,5 +82,13 @@ public class VideoBookingParticipantEntity {
 
 	public void setUser(UserEntity user) {
 		this.user = user;
+	}
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
 	}
 }

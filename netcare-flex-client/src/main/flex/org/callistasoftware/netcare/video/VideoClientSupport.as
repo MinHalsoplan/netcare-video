@@ -9,7 +9,7 @@ package org.callistasoftware.netcare.video
 	
 	import mx.controls.Alert;
 
-	internal class VideoClientSupport extends EventDispatcher
+	public class VideoClientSupport extends EventDispatcher
 	{
 		private var url:String;
 		protected var streamName:String;

@@ -7,12 +7,12 @@
 		<![CDATA[
 			import mx.controls.Alert;
 			
+			import org.callistasoftware.netcare.video.VideoClientSupport;
 			import org.callistasoftware.netcare.video.VideoConsumer;
 			import org.callistasoftware.netcare.video.VideoEvent;
 			import org.callistasoftware.netcare.video.VideoProducer;
 			
-			private var consumer:VideoConsumer;
-			private var producer:VideoProducer;
+			private var stream:VideoClientSupport;
 			
 			private var errs:Boolean;
 			
@@ -21,8 +21,10 @@
 				trace("Application start");
 				
 				var serverUrl:String = this.parameters["server"];
-				var consumeStream:String = this.parameters["consumeStream"];
-				var produceStream:String = this.parameters["produceStream"];
+				var streamName:String = this.parameters["stream"];
+				var type:String = this.parameters["type"];
+				var width:uint = this.parameters["width"];
+				var height:uint = this.parameters["height"];
 				
 				errs = false;
 				if (serverUrl == null || serverUrl.length == 0) {
@@ -30,13 +32,13 @@
 					errs = true;
 				}
 				
-				if (consumeStream == null || consumeStream.length == 0) {
+				if (streamName == null || streamName.length == 0) {
 					Alert.show("The stream to consume is not set.");
 					errs = true;
 				}
 				
-				if (produceStream == null || produceStream.length == 0) {
-					Alert.show("The stream to produce is not set.");
+				if (type == null || type.length == 0) {
+					Alert.show("Type is not set. Must be either 'consumer' or 'producer'");
 					errs = true;
 				}
 				
@@ -44,46 +46,25 @@
 					Alert.show("The execution will not continue due to initialization failure.");
 				}
 				
-				consumer = new VideoConsumer(serverUrl, consumeStream, 640, 480);
-				producer = new VideoProducer(serverUrl, produceStream, 320, 240);
-				
-				producer.addEventListener(org.callistasoftware.netcare.video.VideoEvent.PRODUCER_AVAILABLE, onProducerVideo);
-				producer.addEventListener(org.callistasoftware.netcare.video.VideoEvent.PRODUCER_UNAVAILABLE, onNoProducerVideo);
-				
-				consumer.addEventListener(org.callistasoftware.netcare.video.VideoEvent.CONSUMER_AVAILABLE, onConsumerVideo);
-				consumer.addEventListener(org.callistasoftware.netcare.video.VideoEvent.CONSUMER_UNAVAILABLE, onNoConsumerVideo);
-			}
-			
-			protected function onProducerVideo(event:org.callistasoftware.netcare.video.VideoEvent):void {
-				trace("Producer video available...");
-				selfVideo.addChild(event.getVideo());
-			}
-			
-			protected function onNoProducerVideo(event:org.callistasoftware.netcare.video.VideoEvent):void {
-				selfVideo.removeChildAt(0);
-			}
-			
-			protected function onConsumerVideo(event:org.callistasoftware.netcare.video.VideoEvent):void {
-				trace("Client video available...");
-				remoteVideo.addChild(event.getVideo());
-			}
-			
-			protected function onNoConsumerVideo(event:org.callistasoftware.netcare.video.VideoEvent):void {
-				remoteVideo.removeChildAt(0);
-			}
-			
-			protected function onStartClick():void {
-				if (!errs) {
-					producer.connect();
-					consumer.connect();
+				if (type == 'consumer') {
+					stream = new VideoConsumer(serverUrl, streamName, width, height);
+					stream.addEventListener(org.callistasoftware.netcare.video.VideoEvent.CONSUMER_AVAILABLE, onVideo);
+					stream.addEventListener(org.callistasoftware.netcare.video.VideoEvent.CONSUMER_UNAVAILABLE, onNoVideo);
+				} else if (type == 'producer') {
+					stream = new VideoProducer(serverUrl, streamName, width, height);
+					stream.addEventListener(org.callistasoftware.netcare.video.VideoEvent.PRODUCER_AVAILABLE, onVideo);
+					stream.addEventListener(org.callistasoftware.netcare.video.VideoEvent.PRODUCER_UNAVAILABLE, onNoVideo);
 				}
+				
+				this.stream.connect();
 			}
 			
-			protected function onStopClick():void {
-				if (!errs) {
-					producer.disconnect();
-					consumer.disconnect();
-				}
+			protected function onVideo(event:org.callistasoftware.netcare.video.VideoEvent):void {
+				video.addChild(event.getVideo());
+			}
+			
+			protected function onNoVideo(event:org.callistasoftware.netcare.video.VideoEvent):void {
+				video.removeChildAt(0);
 			}
 		]]>
 	</fx:Script>
@@ -91,15 +72,5 @@
 	<fx:Declarations>
 		
 	</fx:Declarations>
-	
-	<s:Button x="780" y="249" width="92" label="Starta video" click="onStartClick()"/>
-	<s:Button x="880" y="249" label="Avsluta video" click="onStopClick()"/>
-	
-	<s:BorderContainer x="0" y="0" width="641" height="481">
-		<s:VideoDisplay x="0" y="0" width="640" height="480" id="remoteVideo" />
-	</s:BorderContainer>
-
-	<s:BorderContainer x="651" y="0" width="321" height="241">
-		<s:VideoDisplay x="0" y="0" width="320" height="240" id="selfVideo" />
-	</s:BorderContainer>	
+	<s:VideoDisplay x="0" y="0" id="video" />	
 </s:Application>

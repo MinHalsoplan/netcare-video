@@ -11,8 +11,7 @@
   </parent>
   
   <properties>
-  	<spring.version>3.1.0.RELEASE</spring.version>
-  	<scalate.version>1.5.3</scalate.version>
+  	<spring.version>3.1.1.RELEASE</spring.version>
   </properties>
   
   <dependencies>
@@ -20,6 +19,46 @@
   		<groupId>ch.qos.logback</groupId>
   		<artifactId>logback-classic</artifactId>
   		<version>1.0.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.security</groupId>
+  		<artifactId>spring-security-web</artifactId>
+  		<version>3.1.0.RELEASE</version>
+  		<exclusions>
+  			<exclusion>
+  				<groupId>org.springframework</groupId>
+  				<artifactId>spring-jdbc</artifactId>
+  			</exclusion>
+  		</exclusions>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.security</groupId>
+  		<artifactId>spring-security-taglibs</artifactId>
+  		<version>3.1.0.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.security</groupId>
+  		<artifactId>spring-security-core</artifactId>
+  		<version>3.1.0.RELEASE</version>
+  		<exclusions>
+  			<exclusion>
+  				<groupId>org.springframework</groupId>
+  				<artifactId>spring-core</artifactId>
+  			</exclusion>
+  			<exclusion>
+  				<groupId>org.springframework</groupId>
+  				<artifactId>spring-beans</artifactId>
+  			</exclusion>
+  			<exclusion>
+  				<groupId>org.springframework</groupId>
+  				<artifactId>spring-aop</artifactId>
+  			</exclusion>
+  		</exclusions>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.security</groupId>
+  		<artifactId>spring-security-config</artifactId>
+  		<version>3.1.0.RELEASE</version>
   	</dependency>
   	<dependency>
   		<groupId>org.springframework</groupId>
@@ -37,10 +76,81 @@
   		<version>${spring.version}</version>
   	</dependency>
   	<dependency>
-  		<groupId>javax</groupId>
-  		<artifactId>javaee-web-api</artifactId>
-  		<version>6.0</version>
-  		<scope>provided</scope>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-tx</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-core</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-beans</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-aop</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-expression</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.data</groupId>
+  		<artifactId>spring-data-jpa</artifactId>
+  		<version>1.0.3.RELEASE</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-entitymanager</artifactId>
+  		<version>3.6.7.Final</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-core</artifactId>
+  		<version>3.6.7.Final</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-dbcp</groupId>
+  		<artifactId>commons-dbcp</artifactId>
+  		<version>1.4</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>hsqldb</groupId>
+  		<artifactId>hsqldb</artifactId>
+  		<version>1.8.0.10</version>
+  	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+		<version>2.5</version>
+	</dependency>
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-core-asl</artifactId>
+		<version>1.9.3</version>
+	</dependency>
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-mapper-asl</artifactId>
+		<version>1.9.3</version>
+	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-test</artifactId>
+  		<version>${spring.version}</version>
+  		<scope>test</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>4.10</version>
+  		<scope>test</scope>
   	</dependency>
   </dependencies>
   
@@ -110,6 +220,9 @@
   			<artifactId>jetty-maven-plugin</artifactId>
   			<version>8.1.0.v20120127</version>
   			<configuration>
+ 				<scanTargets>
+ 					<scanTarget>${project.build.directory}/${project.build.finalName}</scanTarget>
+ 				</scanTargets>
   				<connectors>
   					<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
   						<port>9090</port>
