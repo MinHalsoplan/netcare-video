@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="netcare" tagdir="/WEB-INF/tags/" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <netcare:page>
@@ -61,11 +61,10 @@
 	</netcare:header>
 	<netcare:body>
 		<div class="span9">
-			<h2>Videomöte</h2>
+			<h2><spring:message code="meeting.title" /></h2>
 			<p>
-				<span class="label label-info">Information</span>
-				Nedan visas deltagarna i videomötet, inklusive dig själv. I menyn till höger kan du välja
-				att dölja de deltagare som du inte vill se på skärmen.
+				<span class="label label-info"><spring:message code="label.information" /></span>
+				<spring:message code="meeting.titleDescription" />
 			</p>
 			<ul class="thumbnails">
 				<c:forEach var="part" items="${requestScope.booking.participants}" >
@@ -110,12 +109,12 @@
 			</ul>		
 		</div>
 		<div class="span3 menu">
-			<h3><img src="<c:url value="/img/icons/16/auth.png" />" /> Inloggad som</h3>
+			<h3><img src="<c:url value="/img/icons/16/auth.png" />" /> <spring:message code="menu.loggedInAs" /></h3>
 			<p>
 				<a href="#"><sec:authentication property="principal.username" /></a> | <a href="<c:url value="/j_spring_security_logout" />">Logga ut</a>
 			</p>
 		
-			<h3><img src="<c:url value="/img/icons/16/user.png" />" /> Deltagare</h3>
+			<h3><img src="<c:url value="/img/icons/16/user.png" />" /> <spring:message code="meeting.participants" /></h3>
 			
 			<c:forEach items="${requestScope.booking.participants}" var="part">
 				<p>
@@ -125,14 +124,18 @@
 			</c:forEach>
 			
 			<p>
-				<a id="leave-meeting" href="#">Klicka här</a> för att lämna videomötet.
+				<a id="leave-meeting" href="#"><spring:message code="meeting.clickHere" /></a> <spring:message code="meeting.toLeave" />
 			</p>
 			
-			<h3><img src="<c:url value="/img/icons/16/meetinginfo.png" />" /> Mötesinformation</h3>
-			<p>
-				<strong>Startar:</strong> <c:out value="${requestScope.booking.start}" /><br />
-				<strong>Slutar:</strong> <c:out value="${requestScope.booking.end}" />
-			</p>
+			<h3><img src="<c:url value="/img/icons/16/meetinginfo.png" />" /> <spring:message code="meeting.info" /></h3>
+			<p><strong><spring:message code="meeting.name" />: </strong> <c:out value="${requestScope.booking.name}" /></p>
+			<blockquote>
+				<p><c:out value="${requestScope.booking.description}" /></p>
+			</blockquote>
+			<p><strong><spring:message code="meeting.createdBy" />: </strong> <c:out value="${requestScope.booking.createdBy.name}" /></p>
+			<p><strong><spring:message code="meeting.owner" />: </strong> <c:out value="${requestScope.booking.careUnit.name}" /></p>
+			<p><strong><spring:message code="meeting.start" />:</strong> <c:out value="${requestScope.booking.start}" /></p>
+			<p><strong><spring:message code="meeting.end" />:</strong> <c:out value="${requestScope.booking.end}" /></p>
 		</div>
 	</netcare:body>
 </netcare:page>
