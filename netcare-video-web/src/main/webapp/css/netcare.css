@@ -1,0 +1,68 @@
+/**
+ * Copyright (C) 2011,2012 Callista Enterprise AB <info@callistaenterprise.se>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+@CHARSET "UTF-8";
+
+a:hover {
+	cursor: pointer;
+}
+
+.spinner {
+	background: url('/img/ajax-loader-small.gif') no-repeat right;
+}
+
+.addButton, .addButton:hover {
+	padding-left: 24px;
+	background: url('/img/icons/16/add.png') no-repeat 3px;
+}
+
+.cool .shadow {
+	color: black;
+	border-radius: 10px;
+}
+
+.cool {
+	position: relative;
+	border-radius: 10px;
+	padding: 15px;
+	color: black;
+	margin: 20px;
+	box-shadow: 2px 2px 5px #333;
+	background-color: white;
+	text-align: center;
+}
+
+
+.shadow-box {
+	margin: 0px auto;
+	/*padding: 10px;*/
+	width: 95%; 
+	border-radius: 10px; 
+	box-shadow: 2px 2px 5px #333;
+}
+
+li.ui-menu-item,
+a.ui-state-default,
+a.ui-state-highlight {
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size:13px;
+	font-weight:normal;
+}
+
+table td {
+	vertical-align: middle;
+}
+

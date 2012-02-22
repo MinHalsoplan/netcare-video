@@ -48,7 +48,7 @@ public class PatientImpl extends UserImpl implements Patient {
 
 	@Override
 	public String getUsername() {
-		return this.civicRegistrationNumber;
+		return this.getName();
 	}
 
 	@Override

@@ -18,14 +18,17 @@
 --%>
 <%@ tag language="java" pageEncoding="UTF-8" body-content="scriptless" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Netcare Video</title>
+	<title><spring:message code="application.title" /></title>
 	
 	<!-- Include Twitter bootstrap -->
 	<link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css" />" />
 	<link rel="stylesheet" href="<c:url value="/css/smoothness/jquery-ui-1.8.17.custom.css" />" />
+	
+	<link rel="stylesheet" href="<c:url value="/css/netcare.css" />" />
 	
 	<style type="text/css">
 		/* Override some defaults */
@@ -67,10 +70,14 @@
       }
 	</style>
 	
-	<!-- Include JQuery -->
 	<script type="text/javascript" src="<c:url value="/js/jquery-1.7.1.min.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/js/jquery-ui-1.8.17.custom.min.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/js/bootstrap.min.js" />"></script>
+	
+	<script type="text/javascript" src="<c:url value="/js/netcare.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/js/netcare/Util.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/js/netcare/PageMessages.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/js/netcare/Ajax.js" />"></script>
 	
 	<jsp:doBody />
 </head>

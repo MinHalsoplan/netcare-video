@@ -22,8 +22,8 @@
 <%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
 
 
-<div class="span12">
+<div class="span9">
 	<jsp:doBody />
 </div>
 
-<div class="span4"></div>
+<netcare:menu />

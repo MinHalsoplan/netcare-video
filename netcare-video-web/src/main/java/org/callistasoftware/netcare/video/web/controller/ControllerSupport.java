@@ -7,12 +7,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public abstract class ControllerSupport {
 
-	private static final Logger log = LoggerFactory.getLogger(ControllerSupport.class);
+	private final Logger log = LoggerFactory.getLogger(ControllerSupport.class);
 	
 	protected User getCurrentUser() {
 		final User u = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		log.debug("Current user is {}", u.getUsername());
+		getLog().debug("Current user is {}", u.getUsername());
 		
 		return u;
+	}
+	
+	protected Logger getLog() {
+		return this.log;
 	}
 }

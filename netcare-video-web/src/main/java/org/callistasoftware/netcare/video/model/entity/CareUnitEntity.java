@@ -40,13 +40,14 @@ public class CareUnitEntity {
 	CareUnitEntity() {
 	}
 	
-	CareUnitEntity(final String hsaId) {
+	CareUnitEntity(final String hsaId, final String name) {
 		this();
 		this.setHsaId(hsaId);
+		this.setName(name);
 	}
 
-	public static CareUnitEntity newEntity(final String hsaId) {
-		return new CareUnitEntity(hsaId);
+	public static CareUnitEntity newEntity(final String hsaId, final String name) {
+		return new CareUnitEntity(hsaId, name);
 	}
 	
 	public Long getId() {

@@ -22,36 +22,21 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
 
-<c:url value="/netcare/user/home" var="userHome" scope="page" />
-
 <script type="text/javascript">
 	$(function() {
-		var cnr = "<sec:authentication property="principal.civicRegistrationNumber" />";
-		var format = new NC.Util().formatCnr(cnr);
+		var crn = '<sec:authentication property="principal.civicRegistrationNumber" />';
+		var format = new NC.Util().formatCrn(crn);
 		
-		$('#cnr').html(format);
+		$('#crn').html(format);
 	});
 </script>
 
-<div class="span4">
-	<h3><netcare:image name="auth" size="16"/><spring:message code="loggedInAs" /></h3>
+<div class="span3">
+	<h3><netcare:image name="auth" size="16"/><spring:message code="menu.loggedInAs" /></h3>
 	<p>
-		<a href="#"><sec:authentication property="principal.username" /></a> | <a href="<spring:url value="/j_spring_security_logout" htmlEscape="true"/>"><spring:message code="logout" /></a>
+		<a href="#"><sec:authentication property="principal.username" /></a> | <a href="<spring:url value="/j_spring_security_logout" htmlEscape="true"/>"><spring:message code="menu.logout" /></a>
 	</p>
 	<p>
-		<strong><spring:message code="cnr" />:</strong> <span id="cnr"></span>
+		<strong><spring:message code="patient.crn" />:</strong> <span id="crn"></span>
 	</p>
-	
-	<h3><spring:message code="workWith" /></h3>
-	<ul>
-		<li><a id="homeLink" href="<spring:url value="/netcare/user/home" />"><spring:message code="phome.header" /></a></li>
-		<li><a id="reportLink" href="<spring:url value="/netcare/user/report" />"><spring:message code="report.header" /></a></li>
-		<li><a id="resultLink" href="<spring:url value="/netcare/user/results" />"><spring:message code="result.header" /></a></li>
-	</ul>
-	
-	<ul>
-		<li><a href="<spring:url value="/netcare/user/profile" />"><spring:message code="phome.profile" /></a></li>
-	</ul>
 </div>
-	
-</body>

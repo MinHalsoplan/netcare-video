@@ -1,5 +1,14 @@
 package org.callistasoftware.netcare.video.core.spi.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import org.callistasoftware.netcare.service.api.ServiceResult;
+import org.callistasoftware.netcare.service.api.impl.ServiceResultImpl;
+import org.callistasoftware.netcare.service.messages.GenericSuccessMessage;
+import org.callistasoftware.netcare.video.core.api.User;
 import org.callistasoftware.netcare.video.core.api.impl.CareGiverImpl;
 import org.callistasoftware.netcare.video.core.api.impl.PatientImpl;
 import org.callistasoftware.netcare.video.core.spi.UserDetailsService;
@@ -43,6 +52,36 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		
 		throw new UsernameNotFoundException("User " + username + " not found in repository");
+	}
+
+	@Override
+	public ServiceResult<User[]> findUsersBySearch(String search) {
+		log.info("Searching for users using term: {}", search.toLowerCase());
+		
+		final List<PatientEntity> patients = this.pRepo.findBySearch("%" + search.toLowerCase() + "%");
+		log.debug("Found {} patients that matched: {}", patients.size(), search);
+		
+		final List<CareGiverEntity> careGivers = this.cgRepo.findBySearch("%" + search.toLowerCase() + "%");
+		log.debug("Found {} care givers that matched: {}", careGivers.size(), search);
+		
+		final List<User> users = new ArrayList<User>();
+		for (final PatientEntity p : patients) {
+			users.add(PatientImpl.newFromEntity(p));
+		}
+		
+		for (final CareGiverEntity cg : careGivers) {
+			users.add(CareGiverImpl.newFromEntity(cg));
+		}
+		
+		Collections.sort(users, new Comparator<User>() {
+
+			@Override
+			public int compare(User o1, User o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		
+		return ServiceResultImpl.createSuccessResult(users.toArray(new User[users.size()]), new GenericSuccessMessage());
 	}
 
 }

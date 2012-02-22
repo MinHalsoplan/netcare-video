@@ -7,61 +7,55 @@
 <netcare:page>
 	<netcare:header>
 		<script type="text/javascript">
+			var booking = "<c:out value='${requestScope.booking.id}' />";
+			var ajax = new NC.Ajax();
+			var leaveMeeting = function(callback) {
+				ajax.postSynchronous('/meeting/' + booking + '/leave', null, callback); 
+			};
+		
+			$(window).unload(function() {
+				leaveMeeting();
+			});
+		
 			$(function() {
-				var booking = "<c:out value='${requestScope.booking.id}' />";
-				
 				var checkStatus = function(booking) {
-					$.ajax({
-						url : '/api/meeting/' + booking + '/status',
-						dataType: 'json',
-						success : function(data) {
+					
+					ajax.get('/meeting/' + booking + '/status', function(data) {
+						$.each(data.data.participants, function(i, v){
+							$('#connectionStatus-' + v.user.id).empty();
+							var present = $('#video-' + v.user.id + ' object').is(':visible');
 							
-							$.each(data.participants, function(i, v) {
-								
-								$('#connectionStatus-' + v.user.id).empty();
-								var present = $('#video-' + v.user.id + ' object').is(':visible');
-								
-								if (v.connected) {
-									if (!present) {
-										$('#video-' + v.user.id + ' object').show();
-									}
-									
-									$('#connectionStatus-' + v.user.id).append(
-										$('<img>').attr('src', '/img/icons/16/connected.png')
-									);
-								} else {
-									$('#connectionStatus-' + v.user.id).append(
-										$('<img>').attr('src', '/img/icons/16/disconnected.png')
-									);
-									
-									if (present) {
-										$('#video-' + v.user.id + ' object').hide();	
-									}
+							if (v.connected) {
+								if (!present) {
+									$('#video-' + v.user.id + ' object').show();
 								}
-							});
-							
-						}
+								
+								$('#connectionStatus-' + v.user.id).append(
+									$('<img>').attr('src', '/img/icons/16/connected.png')
+								);
+							} else {
+								$('#connectionStatus-' + v.user.id).append(
+									$('<img>').attr('src', '/img/icons/16/disconnected.png')
+								);
+								
+								if (present) {
+									$('#video-' + v.user.id + ' object').hide();	
+								}
+							}
+						});
 					});
-				}
+				};
 				
 				$('#leave-meeting').click(function(e) {
 					e.preventDefault();
-					
-					$.ajax({
-						url : '/api/meeting/' + booking + '/leave',
-						type : 'post',
-						dataType : 'json',
-						async : false,
-						success : function(data) {
-							window.location = '/media/dashboard';
-						}
-					})
+					leaveMeeting(function(data) {
+						window.location = '/media/dashboard';
+					});
 				});
 				
 				setInterval(function() {
 					checkStatus(booking);
 				}, 10000);
-				
 			});
 		</script>
 	</netcare:header>
@@ -136,8 +130,8 @@
 			
 			<h3><img src="<c:url value="/img/icons/16/meetinginfo.png" />" /> Mötesinformation</h3>
 			<p>
-				<strong>Startar:</strong> <fmt:formatDate value="${requestScope.booking.start}" pattern="yyyy-MM-dd HH:mm" /><br />
-				<strong>Slutar:</strong> <fmt:formatDate value="${requestScope.booking.end}" pattern="yyyy-MM-dd HH:mm" />
+				<strong>Startar:</strong> <c:out value="${requestScope.booking.start}" /><br />
+				<strong>Slutar:</strong> <c:out value="${requestScope.booking.end}" />
 			</p>
 		</div>
 	</netcare:body>

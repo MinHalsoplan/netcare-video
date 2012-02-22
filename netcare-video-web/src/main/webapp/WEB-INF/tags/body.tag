@@ -26,7 +26,7 @@
 	<div id="pageLoadingBox" class="modal" style="display: none;">
 		<div class="modal-body" style="height: 100px; text-align:center;">
 			<span><img src="<c:url value="/img/ajax-loader-large.gif" />" /></span>
-			<h2>Vänligen vänta medan sidan laddas</h2>
+			<h2><spring:message code="application.pageLoading" /></h2>
 		</div>
 	</div>
 	<div class="container">
@@ -34,10 +34,10 @@
 			<div class="page-header">
 				<div class="row">
 					<div class="span9">
-						<h1>Video</h1>
+						<h1><spring:message code="application.title" /></h1>
 					</div>
 					<div id="ajaxInProgress" class="span3" style="text-align: right; vertical-align: middle; display: none;">
-						<span>Laddar...<img src="<c:url value="/img/ajax-loader-small.gif" />" /></span>
+						<span><spring:message code="application.loading" /><img src="<c:url value="/img/ajax-loader-small.gif" />" /></span>
 					</div>
 				</div>
 			</div>

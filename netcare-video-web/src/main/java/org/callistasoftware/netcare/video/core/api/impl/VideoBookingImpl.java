@@ -1,12 +1,15 @@
 package org.callistasoftware.netcare.video.core.api.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
+import org.callistasoftware.netcare.service.util.DateUtil;
+import org.callistasoftware.netcare.video.core.api.CareGiver;
+import org.callistasoftware.netcare.video.core.api.CareUnit;
 import org.callistasoftware.netcare.video.core.api.VideoBooking;
 import org.callistasoftware.netcare.video.core.api.VideoParticipant;
-import org.callistasoftware.netcare.video.model.entity.VideoBookingEntity;
+import org.callistasoftware.netcare.video.model.entity.VideoMeetingEntity;
 import org.callistasoftware.netcare.video.model.entity.VideoParticipantEntity;
 
 /**
@@ -23,10 +26,16 @@ public class VideoBookingImpl implements VideoBooking {
 
 	private Long id;
 	
-	private Date start;
-	private Date end;
+	private String name;
+	private String description;
+	
+	private String start;
+	private String end;
 	
 	private boolean started;
+	
+	private CareUnit careUnit;
+	private CareGiver createdBy;
 	
 	private List<VideoParticipant> participants;
 	
@@ -34,12 +43,19 @@ public class VideoBookingImpl implements VideoBooking {
 	
 	}
 	
-	public static VideoBooking newFromEntity(final VideoBookingEntity entity) {
+	public static VideoBooking newFromEntity(final VideoMeetingEntity entity) {
 		VideoBookingImpl dto = new VideoBookingImpl();
 		dto.id = entity.getId();
-		dto.start = entity.getStartDateTime();
-		dto.end = entity.getEndDateTime();
-		dto.started = entity.isStarted();
+		dto.name = entity.getName();
+		dto.description = entity.getDescription();
+		dto.start = DateUtil.toDateTime(entity.getStartDateTime());
+		dto.end = DateUtil.toDateTime(entity.getEndDateTime());
+		dto.careUnit = CareUnitImpl.newFromEntity(entity.getCareUnit());
+		dto.createdBy = CareGiverImpl.newFromEntity(entity.getCreatedBy());
+		
+		final Calendar c = Calendar.getInstance();
+		long n = c.getTime().getTime();
+		dto.started = n >= entity.getStartDateTime().getTime() && n <= entity.getEndDateTime().getTime();
 		
 		dto.participants = new ArrayList<VideoParticipant>(entity.getParticipants().size());
 		for (final VideoParticipantEntity part : entity.getParticipants()) {
@@ -49,10 +65,10 @@ public class VideoBookingImpl implements VideoBooking {
 		return dto;
 	}
 	
-	public static List<VideoBooking> newFromEntities(final List<VideoBookingEntity> entities) {
-		final List<VideoBooking> dtos = new ArrayList<VideoBooking>(entities.size());
-		for (final VideoBookingEntity ent : entities) {
-			dtos.add(newFromEntity(ent));
+	public static VideoBooking[] newFromEntities(final List<VideoMeetingEntity> entities) {
+		final VideoBooking[] dtos = new VideoBooking[entities.size()];
+		for (int i = 0; i < entities.size(); i++) {
+			dtos[i] = newFromEntity(entities.get(i));
 		}
 		
 		return dtos;
@@ -64,12 +80,12 @@ public class VideoBookingImpl implements VideoBooking {
 	}
 	
 	@Override
-	public Date getStart() {
+	public String getStart() {
 		return this.start;
 	}
 	
 	@Override
-	public Date getEnd() {
+	public String getEnd() {
 		return this.end;
 	}
 	
@@ -81,5 +97,25 @@ public class VideoBookingImpl implements VideoBooking {
 	@Override
 	public List<VideoParticipant> getParticipants() {
 		return this.participants;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+	
+	@Override
+	public String getDescription() {
+		return description;
+	}
+
+	@Override
+	public CareUnit getCareUnit() {
+		return careUnit;
+	}
+
+	@Override
+	public CareGiver getCreatedBy() {
+		return createdBy;
 	}
 }

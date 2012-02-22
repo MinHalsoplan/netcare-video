@@ -7,4 +7,10 @@ public interface CareGiver extends User {
 	 * @return
 	 */
 	String getHsaId();
+	
+	/**
+	 * Get the care unit of this care giver
+	 * @return
+	 */
+	CareUnit getCareUnit();
 }

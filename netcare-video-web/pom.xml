@@ -16,6 +16,11 @@
   
   <dependencies>
   	<dependency>
+  		<groupId>org.callistasoftware.netcare</groupId>
+  		<artifactId>netcare-service-core</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
   		<groupId>ch.qos.logback</groupId>
   		<artifactId>logback-classic</artifactId>
   		<version>1.0.0</version>

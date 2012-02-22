@@ -1,8 +1,8 @@
 package org.callistasoftware.netcare.video.core.spi;
 
-import java.util.List;
-
+import org.callistasoftware.netcare.service.api.ServiceResult;
 import org.callistasoftware.netcare.video.core.api.VideoBooking;
+import org.callistasoftware.netcare.video.core.api.VideoMeetingFormBean;
 import org.callistasoftware.netcare.video.core.exception.ServiceException;
 
 /**
@@ -18,19 +18,34 @@ public interface VideoBookingService {
 	 * @param includePastBookings Whether to include past bookings or not
 	 * @return
 	 */
-	List<VideoBooking> getBookingsForUser(final Long user, boolean includePastBookings);
+	ServiceResult<VideoBooking[]> getBookingsForUser(final Long user, boolean includePastBookings);
+	
+	/**
+	 * Get all video booking for a care unit
+	 * @param careUnit
+	 * @param includePastBookings
+	 * @return
+	 */
+	ServiceResult<VideoBooking[]> getBookingsForCareUnit(final Long careUnit, boolean includePastBookings);
 	
 	/**
 	 * Load a specific video booking
 	 * @param bookingId
 	 * @return
 	 */
-	VideoBooking loadVideoBooking(final Long bookingId) throws ServiceException;
+	ServiceResult<VideoBooking> loadVideoBooking(final Long bookingId) throws ServiceException;
 	
 	/**
 	 * The current user leaves the video meeting
 	 * @param bookingId
 	 * @throws ServiceException
 	 */
-	void leaveVideoMeeting(final Long bookingId) throws ServiceException;
+	ServiceResult<Boolean> leaveVideoMeeting(final Long bookingId) throws ServiceException;
+	
+	/**
+	 * Create a new video meeting
+	 * @param data
+	 * @return
+	 */
+	ServiceResult<VideoBooking> createNewVideoMeeting(final VideoMeetingFormBean data);
 }

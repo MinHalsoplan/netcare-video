@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,14 +28,14 @@ public class VideoParticipantEntity {
 	private boolean connected;
 	
 	@ManyToOne(optional=false)
-	private VideoBookingEntity booking;
+	private VideoMeetingEntity booking;
 	
-	@OneToOne(optional=false)
+	@ManyToOne(optional=false)
 	private UserEntity user;
 	
 	VideoParticipantEntity() {}
 	
-	VideoParticipantEntity(final VideoBookingEntity booking, final UserEntity user, final boolean owner) {
+	VideoParticipantEntity(final VideoMeetingEntity booking, final UserEntity user, final boolean owner) {
 		this.setBooking(booking);
 		this.setUser(user);
 		this.setOwner(owner);
@@ -68,11 +67,11 @@ public class VideoParticipantEntity {
 		this.owner = owner;
 	}
 
-	public VideoBookingEntity getBooking() {
+	public VideoMeetingEntity getBooking() {
 		return booking;
 	}
 
-	public void setBooking(VideoBookingEntity booking) {
+	public void setBooking(VideoMeetingEntity booking) {
 		this.booking = booking;
 	}
 

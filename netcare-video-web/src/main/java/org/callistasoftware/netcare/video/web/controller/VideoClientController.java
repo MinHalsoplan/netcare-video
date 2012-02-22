@@ -49,6 +49,11 @@ public class VideoClientController extends ControllerSupport {
 		return "dashboard";
 	}
 	
+	@RequestMapping(value="/bookings", method=RequestMethod.GET)
+	public String displayBookingPage() {
+		return "bookings";
+	}
+	
 	@RequestMapping(value="/video", method=RequestMethod.GET)
 	public String displayConference(@RequestParam(value="booking") final Long bookingId, final Model m) {
 		log.info("Display video conference with id {}", bookingId);
@@ -58,7 +63,7 @@ public class VideoClientController extends ControllerSupport {
 		
 		final List<String> errors = new ArrayList<String>();
 		try {
-			final VideoBooking booking = this.service.loadVideoBooking(bookingId);
+			final VideoBooking booking = this.service.loadVideoBooking(bookingId).getData();
 			m.addAttribute("booking", booking);
 			return "video";
 		} catch (final ServiceException e) {

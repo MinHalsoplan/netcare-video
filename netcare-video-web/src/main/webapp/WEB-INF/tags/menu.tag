@@ -23,7 +23,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
 
-<sec:authorize access="hasRole('ROLE_ADMIN')" var="isAdmin"/>
+<sec:authorize access="hasRole('ROLE_CAREGIVER')" var="isAdmin"/>
 <c:choose>
 	<c:when test="${isAdmin}">
 		<netcare:admin-menu />

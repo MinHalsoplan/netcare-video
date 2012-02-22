@@ -1,7 +1,6 @@
 package org.callistasoftware.netcare.video.core.api;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 public interface VideoBooking extends Serializable {
@@ -13,16 +12,40 @@ public interface VideoBooking extends Serializable {
 	Long getId();
 	
 	/**
+	 * Get the name of this meeting
+	 * @return
+	 */
+	String getName();
+	
+	/**
+	 * The care unit that owns the meeting
+	 * @return
+	 */
+	CareUnit getCareUnit();
+	
+	/**
+	 * The care giver who created the meeting
+	 * @return
+	 */
+	CareGiver getCreatedBy();
+	
+	/**
+	 * Get the description of this meeting
+	 * @return
+	 */
+	String getDescription();
+	
+	/**
 	 * The start date and time for this video booking
 	 * @return
 	 */
-	Date getStart();
+	String getStart();
 	
 	/**
 	 * The end date and time for this video booking
 	 * @return
 	 */
-	Date getEnd();
+	String getEnd();
 	
 	/**
 	 * Whether the booking has been started by a user

@@ -7,11 +7,11 @@ import javax.servlet.ServletContextEvent;
 import org.callistasoftware.netcare.video.model.entity.CareGiverEntity;
 import org.callistasoftware.netcare.video.model.entity.CareUnitEntity;
 import org.callistasoftware.netcare.video.model.entity.PatientEntity;
-import org.callistasoftware.netcare.video.model.entity.VideoBookingEntity;
+import org.callistasoftware.netcare.video.model.entity.VideoMeetingEntity;
 import org.callistasoftware.netcare.video.model.repository.CareGiverRepository;
 import org.callistasoftware.netcare.video.model.repository.CareUnitRepository;
 import org.callistasoftware.netcare.video.model.repository.PatientRepository;
-import org.callistasoftware.netcare.video.model.repository.VideoBookingRepository;
+import org.callistasoftware.netcare.video.model.repository.VideoMeetingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
@@ -31,16 +31,24 @@ public class ApplicationListener extends ContextLoaderListener {
 		final CareGiverRepository cgRepo = wc.getBean(CareGiverRepository.class);
 		final PatientRepository patientRepo = wc.getBean(PatientRepository.class);
 		final CareUnitRepository cuRepo = wc.getBean(CareUnitRepository.class);
-		final VideoBookingRepository repo = wc.getBean(VideoBookingRepository.class);
+		final VideoMeetingRepository repo = wc.getBean(VideoMeetingRepository.class);
 		
-		final CareUnitEntity cu = cuRepo.save(CareUnitEntity.newEntity("care-unit-hsa")); 
-		final CareGiverEntity cg = cgRepo.save(CareGiverEntity.newEntity("Dr. Test Testgren", "hsa-id-1234", cu));
+		final CareUnitEntity cu = cuRepo.save(CareUnitEntity.newEntity("care-unit-hsa", "Callista vårdcentral")); 
+		final CareGiverEntity cg = cgRepo.save(CareGiverEntity.newEntity("Dr. Marcus", "hsa-id-1234", cu));
+		
+		final CareGiverEntity cg2 = cgRepo.save(CareGiverEntity.newEntity("Anders", "anders", cu));
+		final CareGiverEntity cg3 = cgRepo.save(CareGiverEntity.newEntity("Hans", "hans", cu));
+		final CareGiverEntity cg4 = cgRepo.save(CareGiverEntity.newEntity("Christian", "christian", cu));
+		final CareGiverEntity cg5 = cgRepo.save(CareGiverEntity.newEntity("Jasmina", "jasmina", cu));
 		
 		final PatientEntity p = patientRepo.save(PatientEntity.newEntity("Peter Larsson", "191212121212"));
 		
-		final VideoBookingEntity booking = VideoBookingEntity.newEntity(new Date(System.currentTimeMillis()));
+		final VideoMeetingEntity booking = VideoMeetingEntity.newEntity("Videomöte", new Date(System.currentTimeMillis()), cg);
 		booking.addParticipant(cg, true);
-		booking.addParticipant(p, false);
+		booking.addParticipant(cg2, false);
+		booking.addParticipant(cg3, false);
+		booking.addParticipant(cg4, false);
+		booking.addParticipant(cg5, false);
 		
 		repo.save(booking);
 		

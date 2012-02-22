@@ -25,7 +25,10 @@
 
 	<persistence-unit name="netcare-video-pu" transaction-type="RESOURCE_LOCAL">
 		<class>org.callistasoftware.netcare.video.model.entity.UserEntity</class>
-		<class>org.callistasoftware.netcare.video.model.entity.VideoBookingEntity</class>
+		<class>org.callistasoftware.netcare.video.model.entity.CareGiverEntity</class>
+		<class>org.callistasoftware.netcare.video.model.entity.PatientEntity</class>
+		<class>org.callistasoftware.netcare.video.model.entity.CareUnitEntity</class>
+		<class>org.callistasoftware.netcare.video.model.entity.VideoMeetingEntity</class>
 		<class>org.callistasoftware.netcare.video.model.entity.VideoParticipantEntity</class>
 	</persistence-unit>
 
