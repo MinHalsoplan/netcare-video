@@ -60,6 +60,8 @@
 								tr.append(
 									$('<td>').append(
 										$('<a>').attr('href', '/media/video?booking=' + v.id).html(connect)
+									).append('<br>').append(
+										$('<a>').attr('href', '/media/notes?meeting=' + v.id).html('Anteckningar')
 									)
 								);
 							} else {

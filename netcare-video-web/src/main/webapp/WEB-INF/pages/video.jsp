@@ -46,6 +46,26 @@
 					});
 				};
 				
+				var submitComment = function() {
+					var text = $('#comment').val();
+					if (text.length != 0) {
+						
+						var data = new Object();
+						data.note = text;
+						data.meetingId = booking;
+						
+						ajax.post('/meeting/' + booking + '/note/new', JSON.stringify(data), function(data) {
+							console.log("Note posted");
+							$('#comment').val('');
+						});
+					}
+				};
+				
+				$('#commentSubmit').click(function(e) {
+					e.preventDefault();
+					submitComment();
+				});
+				
 				$('#leave-meeting').click(function(e) {
 					e.preventDefault();
 					leaveMeeting(function(data) {
@@ -126,6 +146,12 @@
 			<p>
 				<a id="leave-meeting" href="#"><spring:message code="meeting.clickHere" /></a> <spring:message code="meeting.toLeave" />
 			</p>
+			
+			<h3>Anteckna</h3>
+			<textarea id="comment" rows="3"></textarea> 
+			<button id="commentSubmit" type="submit" class="btn btn-primary">Spara anteckning</button>
+			
+			<p></p>
 			
 			<h3><img src="<c:url value="/img/icons/16/meetinginfo.png" />" /> <spring:message code="meeting.info" /></h3>
 			<p><strong><spring:message code="meeting.name" />: </strong> <c:out value="${requestScope.booking.name}" /></p>

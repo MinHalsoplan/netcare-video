@@ -9,13 +9,18 @@ import org.callistasoftware.netcare.service.messages.EntityNotFoundMessage;
 import org.callistasoftware.netcare.service.messages.GenericSuccessMessage;
 import org.callistasoftware.netcare.service.messages.ListEntitiesMessage;
 import org.callistasoftware.netcare.service.util.DateUtil;
+import org.callistasoftware.netcare.video.core.api.MeetingNote;
+import org.callistasoftware.netcare.video.core.api.MeetingNoteFormBean;
 import org.callistasoftware.netcare.video.core.api.VideoBooking;
 import org.callistasoftware.netcare.video.core.api.VideoMeetingFormBean;
+import org.callistasoftware.netcare.video.core.api.impl.MeetingNoteImpl;
 import org.callistasoftware.netcare.video.core.api.impl.VideoBookingImpl;
 import org.callistasoftware.netcare.video.core.exception.ServiceException;
 import org.callistasoftware.netcare.video.core.spi.VideoBookingService;
 import org.callistasoftware.netcare.video.model.entity.CareGiverEntity;
+import org.callistasoftware.netcare.video.model.entity.MeetingNoteEntity;
 import org.callistasoftware.netcare.video.model.entity.PatientEntity;
+import org.callistasoftware.netcare.video.model.entity.UserEntity;
 import org.callistasoftware.netcare.video.model.entity.VideoMeetingEntity;
 import org.callistasoftware.netcare.video.model.entity.VideoParticipantEntity;
 import org.callistasoftware.netcare.video.model.repository.CareGiverRepository;
@@ -149,5 +154,60 @@ public class VideoBookingServiceImpl extends ServiceSupport implements VideoBook
 		} else {
 			throw new IllegalStateException("A user not belonging to the care unit that owns the video meeting tried to delete it.");
 		}
+	}
+
+	@Override
+	public ServiceResult<Boolean> createMeetingNote(MeetingNoteFormBean note) {
+		log.info("Adding meeting note to meeting {}", note.getMeetingId());
+		final VideoMeetingEntity meeting = this.repo.findOne(note.getMeetingId());
+		final UserEntity user = this.getCurrentUser();
+		
+		/*
+		 * Is meeting ongoing?
+		 */
+		if (!meeting.isOngoing()) {
+			throw new IllegalStateException("Cannot add note to meeting that is not ongoing.");
+		}
+		
+		/*
+		 * Is the current user a participant in the meeting
+		 */
+		if (!meeting.isUserParticipant(user)) {
+			throw new IllegalStateException("User that is trying to create a meeting note is not amongst the participants of the meeting.");
+		}
+		
+		meeting.addNote(note.getNote(), getCurrentUser());
+		return ServiceResultImpl.createSuccessResult(Boolean.TRUE, new GenericSuccessMessage());
+	}
+
+	@Override
+	public ServiceResult<MeetingNote[]> loadNotesForMeeting(Long meeting) {
+		log.info("Load meeting notes for meeting {}", meeting);
+		final VideoMeetingEntity m = this.repo.findOne(meeting);
+		if (m == null) {
+			return ServiceResultImpl.createFailedResult(new EntityNotFoundMessage(VideoMeetingEntity.class, meeting));
+		}
+		
+		final UserEntity user = this.getCurrentUser();
+		final boolean allowed;
+		if (user.isCareGiver()) {
+			if (((CareGiverEntity) user).getCareUnit().equals(m.getCareUnit().getId())) {
+				allowed = true;
+			} else if (m.isUserParticipant(user)) {
+				allowed = true;
+			} else {
+				allowed = false;
+			}	
+		} else if (!m.isUserParticipant(user)) {
+			allowed = false;
+		} else {
+			allowed = false;
+		}
+		
+		if (!allowed) {
+			throw new IllegalStateException("User is not allowed to view meeting notes.");
+		}
+		
+		return ServiceResultImpl.createSuccessResult(MeetingNoteImpl.newFromEntities(m.getNotes()), new ListEntitiesMessage(MeetingNoteEntity.class, m.getNotes().size()));
 	}
 }

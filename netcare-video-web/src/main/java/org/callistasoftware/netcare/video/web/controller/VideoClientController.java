@@ -75,6 +75,11 @@ public class VideoClientController extends ControllerSupport {
 		}
 	}
 	
+	@RequestMapping(value="notes", method=RequestMethod.GET)
+	public String displayNotes(@RequestParam("meeting") final Long meeting) {
+		return "notes";
+	}
+	
 	private void getBookings(final Model m) {
 		m.addAttribute("bookings", service.getBookingsForUser(getCurrentUser().getId(), true));
 	}

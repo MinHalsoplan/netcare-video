@@ -50,6 +50,9 @@ public class VideoMeetingEntity {
 	
 	@OneToMany(mappedBy="booking", cascade={ CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval=true, fetch=FetchType.LAZY)
 	private List<VideoParticipantEntity> participants;
+	
+	@OneToMany(cascade={ CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval=true, fetch=FetchType.LAZY)
+	private List<MeetingNoteEntity> notes;
 
 	VideoMeetingEntity() {}
 	
@@ -141,5 +144,32 @@ public class VideoMeetingEntity {
 
 	void setCareUnit(CareUnitEntity careUnit) {
 		this.careUnit = careUnit;
+	}
+	
+	public void addNote(final String note, final UserEntity creator) {
+		this.getNotes().add(MeetingNoteEntity.newEntity(note, creator));
+	}
+
+	public List<MeetingNoteEntity> getNotes() {
+		return notes;
+	}
+
+	void setNotes(List<MeetingNoteEntity> notes) {
+		this.notes = notes;
+	}
+	
+	public boolean isOngoing() {
+		final long n = System.currentTimeMillis();
+		return n >= this.getStartDateTime().getTime() && n <= this.getEndDateTime().getTime();
+	}
+	
+	public boolean isUserParticipant(final UserEntity user) {
+		for (final VideoParticipantEntity ent : this.getParticipants()) {
+			if (ent.getUser().getId().equals(user.getId())) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

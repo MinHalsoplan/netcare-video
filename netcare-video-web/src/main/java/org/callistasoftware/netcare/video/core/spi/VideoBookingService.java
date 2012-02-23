@@ -1,6 +1,8 @@
 package org.callistasoftware.netcare.video.core.spi;
 
 import org.callistasoftware.netcare.service.api.ServiceResult;
+import org.callistasoftware.netcare.video.core.api.MeetingNote;
+import org.callistasoftware.netcare.video.core.api.MeetingNoteFormBean;
 import org.callistasoftware.netcare.video.core.api.VideoBooking;
 import org.callistasoftware.netcare.video.core.api.VideoMeetingFormBean;
 import org.callistasoftware.netcare.video.core.exception.ServiceException;
@@ -56,4 +58,18 @@ public interface VideoBookingService {
 	 * @return
 	 */
 	ServiceResult<Boolean> deleteVideoMeeting(final Long meeting);
+	
+	/**
+	 * Create a new meeting note
+	 * @param meeting
+	 * @return
+	 */
+	ServiceResult<Boolean> createMeetingNote(final MeetingNoteFormBean meeting);
+	
+	/**
+	 * Load notes for a meeting
+	 * @param meeting
+	 * @return
+	 */
+	ServiceResult<MeetingNote[]> loadNotesForMeeting(final Long meeting);
 }

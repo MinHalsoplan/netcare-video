@@ -30,6 +30,7 @@
 		<class>org.callistasoftware.netcare.video.model.entity.CareUnitEntity</class>
 		<class>org.callistasoftware.netcare.video.model.entity.VideoMeetingEntity</class>
 		<class>org.callistasoftware.netcare.video.model.entity.VideoParticipantEntity</class>
+		<class>org.callistasoftware.netcare.video.model.entity.MeetingNoteEntity</class>
 	</persistence-unit>
 
 </persistence>

@@ -1,6 +1,8 @@
 package org.callistasoftware.netcare.video.api.rest;
 
 import org.callistasoftware.netcare.service.api.ServiceResult;
+import org.callistasoftware.netcare.video.core.api.MeetingNote;
+import org.callistasoftware.netcare.video.core.api.MeetingNoteFormBean;
 import org.callistasoftware.netcare.video.core.api.VideoBooking;
 import org.callistasoftware.netcare.video.core.api.VideoMeetingFormBean;
 import org.callistasoftware.netcare.video.core.exception.ServiceException;
@@ -57,5 +59,19 @@ public class VideoMeetingApi extends ControllerSupport {
 	@ResponseBody
 	public ServiceResult<Boolean> leaveVideoMeeting(@PathVariable("booking") final Long booking) throws ServiceException {
 		return this.service.leaveVideoMeeting(booking);
+	}
+	
+	@RequestMapping(value="/{meeting}/note/new", method=RequestMethod.POST, produces="application/json", consumes="application/json")
+	@ResponseBody
+	public ServiceResult<Boolean> createMeetingNote(@RequestBody final MeetingNoteFormBean data) {
+		getLog().info("Adding note to meeting...");
+		return this.service.createMeetingNote(data);
+	}
+	
+	@RequestMapping(value="/{meeting}/note/list", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ServiceResult<MeetingNote[]> loadAllMeetingNotes(@PathVariable("meeting") final Long meeting) {
+		getLog().info("Loading meeting notes for meeting {}", meeting);
+		return this.service.loadNotesForMeeting(meeting);
 	}
 }
