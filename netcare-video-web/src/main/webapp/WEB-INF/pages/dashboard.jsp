@@ -18,7 +18,15 @@
 				var loadBookings = function() {
 					ajax.get('/meeting/list', function(data) {
 						
-						$('#myBooking tbody').empty();
+						$('#myBookings tbody').empty();
+						
+						if (data.data.length == 0) {
+							$('#myBookings').hide();
+							$('#existingBookings div').show();
+						} else {
+							$('#myBookings').show();
+							$('#existingBookings div').hide();
+						}
 						
 						$.each(data.data, function(i, v) {
 							var tr = $('<tr>');
@@ -78,20 +86,24 @@
 				<spring:message code="dashboard.bookings.description" />
 			</p>
 			
-			<table id="myBookings" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th><spring:message code="dashboard.booking.name" /></th>
-						<th><spring:message code="dashboard.booking.start" /></th>
-						<th><spring:message code="dashboard.booking.end" /></th>
-						<th><spring:message code="dashboard.booking.participants" /></th>
-						<th><spring:message code="bookings.createdBy" /></th>
-						<th>&nbsp;</th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-		
+			<section id="existingBookings">
+				<div class="alert alert-info">
+					<p><spring:message code="bookings.noBookings" /></p>
+				</div>
+				<table id="myBookings" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th><spring:message code="dashboard.booking.name" /></th>
+							<th><spring:message code="dashboard.booking.start" /></th>
+							<th><spring:message code="dashboard.booking.end" /></th>
+							<th><spring:message code="dashboard.booking.participants" /></th>
+							<th><spring:message code="bookings.createdBy" /></th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</section>
 		</netcare:content>
 	</netcare:body>
 </netcare:page>

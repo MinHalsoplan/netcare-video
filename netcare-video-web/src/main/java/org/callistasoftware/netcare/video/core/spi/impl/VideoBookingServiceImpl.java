@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.callistasoftware.netcare.service.api.ServiceResult;
 import org.callistasoftware.netcare.service.api.impl.ServiceResultImpl;
+import org.callistasoftware.netcare.service.messages.EntityDeletedMessage;
 import org.callistasoftware.netcare.service.messages.EntityNotFoundMessage;
 import org.callistasoftware.netcare.service.messages.GenericSuccessMessage;
 import org.callistasoftware.netcare.service.messages.ListEntitiesMessage;
@@ -131,5 +132,22 @@ public class VideoBookingServiceImpl extends ServiceSupport implements VideoBook
 		}
 		
 		return ServiceResultImpl.createSuccessResult(VideoBookingImpl.newFromEntity(this.repo.save(entity)), new GenericSuccessMessage());
+	}
+
+	@Override
+	public ServiceResult<Boolean> deleteVideoMeeting(Long meeting) {
+		log.info("Delete video meeting {}", meeting);
+		
+		final VideoMeetingEntity vm = this.repo.findOne(meeting);
+		if (vm == null) {
+			return ServiceResultImpl.createFailedResult(new EntityNotFoundMessage(VideoMeetingEntity.class, meeting));
+		}
+		
+		if (this.getCareGiver().getCareUnit().getId().equals(vm.getCareUnit().getId())) {
+			this.repo.delete(vm);
+			return ServiceResultImpl.createSuccessResult(Boolean.TRUE, new EntityDeletedMessage(VideoMeetingEntity.class, meeting));
+		} else {
+			throw new IllegalStateException("A user not belonging to the care unit that owns the video meeting tried to delete it.");
+		}
 	}
 }

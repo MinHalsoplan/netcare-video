@@ -48,4 +48,12 @@ public interface VideoBookingService {
 	 * @return
 	 */
 	ServiceResult<VideoBooking> createNewVideoMeeting(final VideoMeetingFormBean data);
+	
+	/**
+	 * Delete a video meeting. Only a care giver working on the care unit that
+	 * owns the meeting is allowed to delete the meeting.
+	 * @param meeting
+	 * @return
+	 */
+	ServiceResult<Boolean> deleteVideoMeeting(final Long meeting);
 }

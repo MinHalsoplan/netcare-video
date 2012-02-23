@@ -58,12 +58,10 @@
 						});
 						
 						$('#selectedUsers ul').append(
-							$('<li>').attr('id', 'user-' + ui.item.userId).html(ui.item.value).append(
-								deleteIcon
-							)
+							$('<li>').attr('id', 'user-' + ui.item.userId).html(ui.item.value).append(deleteIcon)
 						);
 						
-						$('#search').val('');
+						$('input[name="search"]').val('');
 					}
 				});
 				
@@ -119,6 +117,14 @@
 						 
 						 $('#myBookings tbody').empty();
 						 
+						 if (data.data.length == 0) {
+							 $('#existingBookings div').show();
+							 $('#myBookings').hide();
+						 } else {
+							 $('#existingBookings div').hide();
+							 $('#myBookings').show();
+						 }
+						 
 						 $.each(data.data, function(i, v) {
 								var tr = $('<tr>');
 								
@@ -147,8 +153,14 @@
 									$('<td>').html(v.createdBy.name)
 								);
 								
+								var deleteIcon = util.createIcon('trash', 16, function() {
+									ajax.post('/meeting/' + v.id + '/delete', null, function(data) {
+										loadMeetings();
+									}, true);
+								});
+								
 								tr.append(
-									$('<td>')
+									$('<td>').append(deleteIcon)
 								)
 								
 								$('#myBookings tbody').append(tr);
@@ -255,19 +267,24 @@
 				</form>
 			</section>
 			
-			<table id="myBookings" class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th><spring:message code="dashboard.booking.name" /></th>
-						<th><spring:message code="dashboard.booking.start" /></th>
-						<th><spring:message code="dashboard.booking.end" /></th>
-						<th><spring:message code="dashboard.booking.participants" /></th>
-						<th><spring:message code="bookings.createdBy" /></th>
-						<th>&nbsp;</th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
+			<section id="existingBookings">
+				<div class="alert alert-info" style="display: none;">
+					<p><spring:message code="bookings.noBookings" /></p>
+				</div>				
+				<table id="myBookings" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th><spring:message code="dashboard.booking.name" /></th>
+							<th><spring:message code="dashboard.booking.start" /></th>
+							<th><spring:message code="dashboard.booking.end" /></th>
+							<th><spring:message code="dashboard.booking.participants" /></th>
+							<th><spring:message code="bookings.createdBy" /></th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</section>
 		
 		</netcare:content>
 	</netcare:body>

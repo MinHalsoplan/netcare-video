@@ -28,6 +28,13 @@ public class VideoMeetingApi extends ControllerSupport {
 		return this.service.createNewVideoMeeting(data);
 	}
 	
+	@RequestMapping(value="/{meeting}/delete", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ServiceResult<Boolean> deleteVideoMeeting(@PathVariable("meeting") final Long meeting) {
+		getLog().info("Delete video meeting {}", meeting);
+		return this.service.deleteVideoMeeting(meeting);
+	}
+	
 	@RequestMapping(value="/list", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ServiceResult<VideoBooking[]> loadAllMeetingsForUser() {
