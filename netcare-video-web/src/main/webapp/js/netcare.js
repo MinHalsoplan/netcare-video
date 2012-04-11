@@ -19,6 +19,10 @@ NC = {
 		log : function(msg) {
 			console.log(msg);
 		},
+		
+		getContextPath : function() {
+			return GLOB_CTX_PATH;
+		},
 
 		focusGained : function(inputField) {
 			$(inputField).css('background', '#D9EDF7');
@@ -26,7 +30,7 @@ NC = {
 		},
 
 		focusLost : function(inputField) {
-			$(inputField).css('background', 'transparent');
+			$(inputField).css('background', 'white');
 		}
 
 };
@@ -47,6 +51,11 @@ $(document).ready(function() {
 		console.log = function() {};
 	}
 	
+	var _util = new NC.Util();
+	//var _support = new NC.Support();
+	
+	$('.page-header h1').css('background', 'url(' + NC.getContextPath() + '/img/icons/32/heart-logo.png) no-repeat left');
+	
 	$('#pageLoading').css('height', $(window).height()).show();
 	$('#pageLoadingBox').show();
 	
@@ -61,7 +70,6 @@ $(document).ready(function() {
 	/*
 	 * Bind all autocomplete boxes
 	 */
-	NC.log("Bind autocomplete fields...");
 	$('.nc-autocomplete').autocomplete({
 		search : function(event, ui) {
 			$(this).addClass('spinner');
@@ -74,10 +82,9 @@ $(document).ready(function() {
 	$('.nc-autocomplete').blur(function() {
 		$(this).removeClass('spinner');
 	});
-	NC.log("done.");
 	
 	var handleErrorCode = function(code) {
-		window.location.href = '/netcare-web/netcare/error/' + code;
+		window.location.href = NC.getContextPath() + '/netcare/error/' + code;
 		return false;
 	};
 	
@@ -88,19 +95,43 @@ $(document).ready(function() {
 	$('input:text').focus( function (event) { 
 		NC.focusGained($(this));
 	});
-	
-	$('input[type=number]').focus( function (event) { 
-		NC.focusGained($(this));
-	});
 
 	$('input:text').focusout( function () { 
 		NC.focusLost($(this));
 	});
-	
-	$('input[type=number]').focusout( function () { 
+
+	$('input:password').focus( function (event) { 
+		NC.focusGained($(this));
+	});
+
+	$('input:password').focusout( function () { 
 		NC.focusLost($(this));
 	});
 	
+	$('input[type="number"]').focus( function (event) { 
+		NC.focusGained($(this));
+	});
+
+	$('input[type="number"]').focusout( function () { 
+		NC.focusLost($(this));
+	});
+
+	$('input[type="tel"]').focus( function (event) { 
+		NC.focusGained($(this));
+	});
+
+	$('input[type="tel"]').focusout( function () { 
+		NC.focusLost($(this));
+	});
+
+	$('input[type="email"]').focus( function (event) { 
+		NC.focusGained($(this));
+	});
+
+	$('input[type="email"]').focusout( function () { 
+		NC.focusLost($(this));
+	});
+
 	/*
 	 * Fix for IE8, make sure enter submits a form.
 	 */
@@ -114,7 +145,6 @@ $(document).ready(function() {
 	/*
 	 * Setup ajax status mappings
 	 */
-	NC.log("Setting upp ajax...");
 	$.ajaxSetup({
 		dataType : 'json',
 		statusCode : {
@@ -130,7 +160,36 @@ $(document).ready(function() {
 		}
 	});
 	
-	NC.log("done.");
+	$('.addButton').css('background', 'url(' + NC.getContextPath() + '/img/icons/16/add.png) no-repeat 3px').css('padding-left', '24px');;
+	$('.spinner').css('background', 'url(' + NC.getContextPath() + '/img/ajax-loader-small.gif) no-repeat right');
+	
+	/*
+	 * Process all date fields that exist on the
+	 * current page.
+	 */
+	$('.dateInput').each(function(i, v) {
+		
+		$(v).datepicker({
+			dateFormat : 'yy-mm-dd',
+			firstDay : 1,
+			minDate : +0
+		});
+		
+		//_support.loadMonths(function(data) { $(v).datepicker('option', 'monthNames', data); });
+		//_support.loadWeekdays(function(data) { $(v).datepicker('option', 'dayNamesMin', data); });
+		
+		$(v).siblings('span').css('cursor', 'pointer').click(function(e) {
+			$(v).datepicker('show');
+		});
+		
+	});
+	
+	/*
+	 * Bind all time fields on the page
+	 */
+	$('.timeInput').each(function(i, v) {
+		_util.validateTimeField($(v));
+	});
 });
 
 
