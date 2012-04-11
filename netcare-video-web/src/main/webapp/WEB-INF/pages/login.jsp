@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<input class="btn primary" type="submit" value="Logga in" />
+					<input class="btn btn-primary" type="submit" value="Logga in" />
 				</div>
 			
 			</form>	
