@@ -26,7 +26,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name="nc_video_user")
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class UserEntity {
 

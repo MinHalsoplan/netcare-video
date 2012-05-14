@@ -24,7 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="nc_care_unit")
+@Table(name="nc_video_care_unit")
 public class CareUnitEntity {
 
 	@Id

@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="video_booking_user")
+@Table(name="nc_video_participant")
 public class VideoParticipantEntity {
 	
 	@Id

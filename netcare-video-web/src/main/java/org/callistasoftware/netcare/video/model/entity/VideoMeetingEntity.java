@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="video_booking")
+@Table(name="nc_video_meeting")
 public class VideoMeetingEntity {
 
 	@Id
@@ -31,11 +31,11 @@ public class VideoMeetingEntity {
 	@Column
 	private String description;
 	
-	@Column(nullable=false)
+	@Column(name="start_time", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDateTime;
 	
-	@Column
+	@Column(name="end_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDateTime;
 	

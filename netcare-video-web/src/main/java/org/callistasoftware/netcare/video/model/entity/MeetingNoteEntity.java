@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="meeting_note")
+@Table(name="nc_video_meeting_note")
 public class MeetingNoteEntity {
 
 	@Id
@@ -26,7 +26,7 @@ public class MeetingNoteEntity {
 	@ManyToOne(optional=false)
 	private UserEntity createdBy;
 	
-	@Column(nullable=false)
+	@Column(name="created_at", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 	
