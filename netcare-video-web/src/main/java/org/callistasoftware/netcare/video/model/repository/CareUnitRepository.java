@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CareUnitRepository extends JpaRepository<CareUnitEntity, Long> {
 
+	CareUnitEntity findByHsaId(final String hsaId);
 }

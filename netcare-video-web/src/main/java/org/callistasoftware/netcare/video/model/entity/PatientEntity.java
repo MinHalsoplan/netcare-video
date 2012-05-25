@@ -65,4 +65,9 @@ public class PatientEntity extends UserEntity {
 	public boolean isCareGiver() {
 		return false;
 	}
+
+	@Override
+	public String getUsername() {
+		return this.civicRegistrationNumber;
+	}
 }

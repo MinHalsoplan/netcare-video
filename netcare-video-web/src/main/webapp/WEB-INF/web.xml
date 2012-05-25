@@ -24,7 +24,7 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/netcare-video-config.xml, /WEB-INF/netcare-video-security.xml</param-value>
+		<param-value>classpath:/netcare-video-config.xml, /WEB-INF/netcare-video-security.xml, classpath*:/netcare-mvk-integration-config.xml</param-value>
 	</context-param>
 	
 	<listener>
@@ -45,7 +45,7 @@
     
     <servlet-mapping>
         <servlet-name>netcare-video</servlet-name>
-        <url-pattern>/media/*</url-pattern>
+        <url-pattern>/web/*</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
@@ -80,5 +80,9 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 </web-app>
 

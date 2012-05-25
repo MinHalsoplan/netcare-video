@@ -72,4 +72,9 @@ public class CareGiverEntity extends UserEntity {
 	public boolean isCareGiver() {
 		return true;
 	}
+
+	@Override
+	public String getUsername() {
+		return this.hsaId;
+	}
 }

@@ -26,8 +26,24 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	
 	<context:annotation-config />
-	<context:property-placeholder location="classpath:/database.properties, classpath:/video.properties"/>
 	
-	<import resource="netcare-video-common-config.xml"/>
+	<beans profile="test">
+		<context:property-placeholder location="classpath:/database.properties, classpath:/video.properties, classpath:/mvk.properties"/>
+	</beans>
+	
+	<beans profile="qa">
+		<context:property-placeholder location="classpath:/database.properties, classpath:/video.properties, file://${user.home}/.netcare-video-qa/mvk.properties"/>
+<!-- 		<context:property-placeholder location="${user.home}/.netcare-video-qa/database.properties, ${user.home}/.netcare-video-qa/video.properties, ${user.home}/.netcare-video-qa/mvk.properties"/> -->
+	</beans>
+	
+	<beans profile="prod">
+		<context:component-scan base-package="org.callistasoftware.netcare.mvk.authentication.service.impl" />
+		<context:property-placeholder location="classpath:/database.properties, classpath:/video.properties, classpath:/mvk.properties"/>
+<!-- 		<context:property-placeholder location="${user.home}/.netcare-video-prod/database.properties, ${user.home}/.netcare-video-prod/video.properties, ${user.home}/.netcare-video-qa/mvk.properties"/> -->
+	</beans>
+	
+	<beans>
+		<import resource="netcare-video-common-config.xml"/>
+	</beans>
 	
 </beans>

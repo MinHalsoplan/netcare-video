@@ -24,4 +24,10 @@ public class UserApi extends ControllerSupport {
 		getLog().debug("Searhing for {}", searchTerm);
 		return this.service.findUsersBySearch(searchTerm);
 	}
+	
+	@RequestMapping(value="/saveUserData", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ServiceResult<Boolean> saveUserData(@RequestParam(value="firstName") final String firstName, @RequestParam(value="surName") final String surName) {
+		return this.service.saveUser(firstName + " " + surName);
+	}
 }

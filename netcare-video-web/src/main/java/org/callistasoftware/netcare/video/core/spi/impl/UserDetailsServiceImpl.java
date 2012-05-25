@@ -19,14 +19,16 @@ import org.callistasoftware.netcare.video.model.repository.PatientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl extends ServiceSupport implements UserDetailsService {
 
 	private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 	
@@ -82,6 +84,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		});
 		
 		return ServiceResultImpl.createSuccessResult(users.toArray(new User[users.size()]), new GenericSuccessMessage());
+	}
+
+	@Override
+	public ServiceResult<Boolean> saveUser(String firstName) {
+		final org.callistasoftware.netcare.video.model.entity.UserEntity user = this.getCurrentUser();
+		
+		log.info("Updating user data for user {}", user.getUsername());
+		
+		user.setName(firstName);
+		
+		final User ubv;
+		if (user.isCareGiver()) {
+			ubv = CareGiverImpl.newFromEntity((CareGiverEntity) user);
+		} else {
+			ubv = PatientImpl.newFromEntity((PatientEntity) user);
+		}
+		
+		/*
+		 * Refresh security context
+		 */
+		log.debug("Refreshing security context with updated firstname/surname");
+		SecurityContextHolder.getContext().setAuthentication(new PreAuthenticatedAuthenticationToken(ubv, "n/a"));
+		
+		return ServiceResultImpl.createSuccessResult(Boolean.TRUE, new GenericSuccessMessage());
 	}
 
 }

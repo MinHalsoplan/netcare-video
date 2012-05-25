@@ -16,27 +16,31 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ tag language="java" pageEncoding="UTF-8" body-content="scriptless" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
 
-<script type="text/javascript">
-	$(function() {
-		var crn = '<sec:authentication property="principal.civicRegistrationNumber" />';
-		var format = new NC.Util().formatCrn(crn);
-		
-		$('#crn').html(format);
-	});
-</script>
-
-<div class="span3">
-	<h3><netcare:image name="auth" size="16"/><spring:message code="menu.loggedInAs" /></h3>
-	<p>
-		<a href="#"><sec:authentication property="principal.username" /></a> | <a href="<spring:url value="/web/security/logout" htmlEscape="true"/>"><spring:message code="menu.logout" /></a>
-	</p>
-	<p>
-		<strong><spring:message code="patient.crn" />:</strong> <span id="crn"></span>
-	</p>
-</div>
+<netcare:page>
+	<netcare:header>
+		<script type="text/javascript">
+			$(function() {
+				$('#modal-from-dom').modal('show');
+			});
+		</script>
+	</netcare:header>
+	<body>
+		<div class="modal-backdrop fade in"></div>
+		<div id="modal-from-dom" class="modal hide fade in" style="display: block;">
+			<div class="modal-header">
+				<h3><spring:message code="denied.title" /></h3>
+			</div>
+			<div class="modal-body">
+				<span class="label label-info"><spring:message code="label.information" /></span>
+				<spring:message code="denied.description" arguments="http://www.lj.se/minhalsoplan" />
+			</div>
+		</div>
+	</body>
+</netcare:page>

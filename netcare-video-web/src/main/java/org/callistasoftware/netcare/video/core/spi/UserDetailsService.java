@@ -11,4 +11,11 @@ public interface UserDetailsService extends org.springframework.security.core.us
 	 * @return
 	 */
 	ServiceResult<User[]> findUsersBySearch(final String search);
+	
+	/**
+	 * Save the user's name to the database
+	 * @param name
+	 * @return
+	 */
+	ServiceResult<Boolean> saveUser(final String name);
 }

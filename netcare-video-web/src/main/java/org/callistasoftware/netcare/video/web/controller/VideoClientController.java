@@ -27,11 +27,6 @@ public class VideoClientController extends ControllerSupport {
 	
 	@Value("${rtmp.url}")
 	private String rtmpServerUrl;
-
-	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String displayLogin() {
-		return "login";
-	}
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String display() {
