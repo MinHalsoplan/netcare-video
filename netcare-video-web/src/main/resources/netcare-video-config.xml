@@ -31,15 +31,24 @@
 		<context:property-placeholder location="classpath:/database.properties, classpath:/video.properties, classpath:/mvk.properties"/>
 	</beans>
 	
-	<beans profile="qa">
-		<context:property-placeholder location="classpath:/database.properties, classpath:/video.properties, file://${user.home}/.netcare-video-qa/mvk.properties"/>
-<!-- 		<context:property-placeholder location="${user.home}/.netcare-video-qa/database.properties, ${user.home}/.netcare-video-qa/video.properties, ${user.home}/.netcare-video-qa/mvk.properties"/> -->
-	</beans>
-	
 	<beans profile="prod">
+		<context:property-placeholder location="
+			file:${user.home}/.netcare-video-prod/database.properties, 
+			file:${user.home}/.netcare-video-prod/video.properties,
+			file:${user.home}/.netcare-video-prod/mvk.properties"/>
+		
 		<context:component-scan base-package="org.callistasoftware.netcare.mvk.authentication.service.impl" />
-		<context:property-placeholder location="classpath:/database.properties, classpath:/video.properties, classpath:/mvk.properties"/>
-<!-- 		<context:property-placeholder location="${user.home}/.netcare-video-prod/database.properties, ${user.home}/.netcare-video-prod/video.properties, ${user.home}/.netcare-video-qa/mvk.properties"/> -->
+		<import resource="classpath*:/netcare-mvk-integration-config.xml"/>
+	</beans>
+
+	<beans profile="qa">
+		<context:property-placeholder location="
+			file:${user.home}/.netcare-video-qa/database.properties, 
+			file:${user.home}/.netcare-video-qa/video.properties,
+			file:${user.home}/.netcare-video-qa/mvk.properties"/>
+		
+		<context:component-scan base-package="org.callistasoftware.netcare.mvk.authentication.service.impl" />
+		<import resource="classpath*:/netcare-mvk-integration-config.xml"/>
 	</beans>
 	
 	<beans>
