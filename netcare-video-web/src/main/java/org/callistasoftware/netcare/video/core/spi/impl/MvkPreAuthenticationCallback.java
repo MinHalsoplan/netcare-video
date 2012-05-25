@@ -92,6 +92,23 @@ public class MvkPreAuthenticationCallback extends ServiceSupport implements PreA
 			if (cg == null) {
 				getLog().debug("Could not find any care giver matching {}", auth.getUsername());
 			} else {
+				
+				/*
+				 * If the user logged in on a different care unit than last time, we
+				 * must handle this here
+				 */
+				if (!cg.getCareUnit().getHsaId().equals(auth.getCareUnitHsaId())) {
+					CareUnitEntity newCareUnit = this.cuRepo.findByHsaId(auth.getCareUnitHsaId());
+					if (newCareUnit == null) {
+						/*
+						 * The user logged in from a care unit that does not exist, create it
+						 */
+						newCareUnit = this.createCareUnit(auth.getCareUnitHsaId(), auth.getCareUnitName());
+					}
+					
+					cg.setCareUnit(newCareUnit);
+				}
+				
 				return CareGiverImpl.newFromEntity(cg);
 			}
 		} else {
@@ -107,4 +124,12 @@ public class MvkPreAuthenticationCallback extends ServiceSupport implements PreA
 		throw new UsernameNotFoundException("User " + auth.getUsername() + " could not be found in the system.");
 	}
 
+	private CareUnitEntity createCareUnit(final String hsaId, final String name) {
+		getLog().debug("Creating new care unit {} - {}", hsaId, name);
+		
+		CareUnitEntity cu = this.cuRepo.save(CareUnitEntity.newEntity(hsaId, name == null ? "Vårdenhetsnamn saknas" : name));
+		getLog().debug("Created care unit {}, {}", cu.getHsaId(), cu.getName());
+		
+		return cu;
+	}
 }
