@@ -25,7 +25,7 @@
 <div class="span3">
 	<h3><netcare:image name="auth" size="16"/><spring:message code="menu.loggedInAs" /></h3>
 	<p>
-		<a href="#"><sec:authentication property="principal.username" /></a> | <a href="<spring:url value="/j_spring_security_logout" htmlEscape="true"/>"><spring:message code="menu.logout" /></a>
+		<a href="#"><sec:authentication property="principal.username" /></a> | <a href="<spring:url value="/web/security/logout" htmlEscape="true"/>"><spring:message code="menu.logout" /></a>
 	</p>
 	<p>
 		<strong><spring:message code="careGiver.careUnit" />:</strong><br />
@@ -34,7 +34,7 @@
 	
 	<div id="system">
 		<h3><spring:message code="menu.workWith" /></h3>
-		<li><a href="<spring:url value="/media/dashboard" />"><spring:message code="menu.start" /></a></li>
-		<li><a href="<spring:url value="/media/bookings" />"><spring:message code="menu.bookings" /></a></li>
+		<li><a href="<spring:url value="/web/dashboard" />"><spring:message code="menu.start" /></a></li>
+		<li><a href="<spring:url value="/web/bookings" />"><spring:message code="menu.bookings" /></a></li>
 	</div>
 </div>

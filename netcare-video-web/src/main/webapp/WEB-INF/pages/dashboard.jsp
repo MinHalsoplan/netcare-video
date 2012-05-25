@@ -12,6 +12,7 @@
 		<script type="text/javascript">
 			$(function() {
 				var connect = '<spring:message code="dashboard.booking.connect" />';
+				var notes = '<spring:message code="notes.title" />';
 				
 				var ajax = new NC.Ajax();
 				
@@ -59,9 +60,9 @@
 							if (v.started) {
 								tr.append(
 									$('<td>').append(
-										$('<a>').attr('href', '/media/video?booking=' + v.id).html(connect)
+										$('<a>').attr('href', NC.getContextPath() + '/video?booking=' + v.id).html(connect)
 									).append('<br>').append(
-										$('<a>').attr('href', '/media/notes?meeting=' + v.id).html('Anteckningar')
+										$('<a>').attr('href', NC.getContextPath() + '/notes?meeting=' + v.id).html(notes)
 									)
 								);
 							} else {
