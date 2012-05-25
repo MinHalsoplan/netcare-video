@@ -7,7 +7,7 @@
   <parent>
   	<groupId>org.callistasoftware.netcare.video</groupId>
   	<artifactId>netcare-video</artifactId>
-  	<version>0.0.1-SNAPSHOT</version>
+  	<version>1.0.0</version>
   </parent>
   
   <properties>
@@ -18,7 +18,7 @@
   	<dependency>
   		<groupId>org.callistasoftware.netcare</groupId>
   		<artifactId>netcare-service-core</artifactId>
-  		<version>${project.version}</version>
+  		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   	<dependency>
   		<groupId>org.callistasoftware.netcare.commons</groupId>
