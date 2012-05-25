@@ -50,7 +50,7 @@
 					<deployables>
 						<deployable>
 							<groupId>${project.groupId}</groupId>
-							<artifactId>netcare-web</artifactId>
+							<artifactId>netcare-video-web</artifactId>
 							<type>war</type>
 							<properties>
 								<context>${remote.context}</context>

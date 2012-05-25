@@ -28,7 +28,6 @@
 	
 	<context:annotation-config />
 	<context:component-scan base-package="org.callistasoftware.netcare.video.web.controller" />
-	<context:property-placeholder location="classpath:/video.properties"/>
 
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
