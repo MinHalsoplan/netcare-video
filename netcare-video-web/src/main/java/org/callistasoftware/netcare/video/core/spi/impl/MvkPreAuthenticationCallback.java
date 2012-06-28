@@ -64,7 +64,7 @@ public class MvkPreAuthenticationCallback extends ServiceSupport implements PreA
 		} else {
 			
 			getLog().info("The user is a patient...");
-			final PatientEntity p = this.pRepo.save(PatientEntity.newEntity("system-generated-name", preAuthenticated.getUsername()));
+			final PatientEntity p = this.pRepo.save(PatientEntity.newEntity("system-generated-name", EntityUtil.formatCrn(preAuthenticated.getUsername())));
 			getLog().debug("User {} has now been saved.", p.getCivicRegistrationNumber());
 			
 			return PatientImpl.newFromEntity(p);

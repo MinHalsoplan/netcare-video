@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public abstract class ServiceSupport {
 
-	private final Logger log = LoggerFactory.getLogger(ServiceSupport.class);
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private UserRepository repo;
