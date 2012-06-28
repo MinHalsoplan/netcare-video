@@ -33,8 +33,4 @@
 	</c:otherwise>
 </c:choose>
 
-<sec:authorize access="hasRole('ROLE_SYSTEM_ADMINISTRATOR')">
-	<netcare:system-administrator-menu />
-</sec:authorize>
-
 
