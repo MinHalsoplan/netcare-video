@@ -31,11 +31,11 @@
 								}
 								
 								$('#connectionStatus-' + v.user.id).append(
-									$('<img>').attr('src', '/img/icons/16/connected.png')
+									$('<img>').attr('src', NC.getContextPath() + '/img/icons/16/connected.png')
 								);
 							} else {
 								$('#connectionStatus-' + v.user.id).append(
-									$('<img>').attr('src', '/img/icons/16/disconnected.png')
+									$('<img>').attr('src', NC.getContextPath() + '/img/icons/16/disconnected.png')
 								);
 								
 								if (present) {
@@ -69,7 +69,7 @@
 				$('#leave-meeting').click(function(e) {
 					e.preventDefault();
 					leaveMeeting(function(data) {
-						window.location = '/media/dashboard';
+						window.location = NC.getContextPath() + '/web/dashboard';
 					});
 				});
 				

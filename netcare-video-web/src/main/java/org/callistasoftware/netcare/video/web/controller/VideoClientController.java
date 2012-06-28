@@ -9,7 +9,6 @@ import org.callistasoftware.netcare.video.core.spi.VideoBookingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +23,6 @@ public class VideoClientController extends ControllerSupport {
 	
 	@Autowired
 	private VideoBookingService service;
-	
-	@Value("${rtmp.url}")
-	private String rtmpServerUrl;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String display() {
@@ -58,8 +54,8 @@ public class VideoClientController extends ControllerSupport {
 	public String displayConference(@RequestParam(value="booking") final Long bookingId, final Model m) {
 		log.info("Display video conference with id {}", bookingId);
 		
-		log.debug("RTMP server url is: {}", this.rtmpServerUrl);
-		m.addAttribute("serverUrl", this.rtmpServerUrl); 
+		log.debug("RTMP server url is: {}", this.service.getVideoServer());
+		m.addAttribute("serverUrl", this.service.getVideoServer()); 
 		
 		final List<String> errors = new ArrayList<String>();
 		try {

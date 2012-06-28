@@ -29,6 +29,7 @@ import org.callistasoftware.netcare.video.model.repository.VideoMeetingRepositor
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,9 @@ public class VideoBookingServiceImpl extends ServiceSupport implements VideoBook
 	
 	@Autowired
 	private VideoMeetingRepository repo;
+	
+	@Value("${rtmp.url}")
+	private String rtmpServerUrl;
 	
 	@Override
 	public ServiceResult<VideoBooking[]> getBookingsForUser(Long user,
@@ -209,5 +213,10 @@ public class VideoBookingServiceImpl extends ServiceSupport implements VideoBook
 		}
 		
 		return ServiceResultImpl.createSuccessResult(MeetingNoteImpl.newFromEntities(m.getNotes()), new ListEntitiesMessage(MeetingNoteEntity.class, m.getNotes().size()));
+	}
+
+	@Override
+	public String getVideoServer() {
+		return this.rtmpServerUrl;
 	}
 }

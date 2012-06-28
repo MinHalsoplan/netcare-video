@@ -13,6 +13,8 @@ import org.callistasoftware.netcare.video.core.exception.ServiceException;
  * @author Marcus Krantz [marcus.krantz@callistaenterprise.se]
  */
 public interface VideoBookingService {
+	
+	String getVideoServer();
 
 	/**
 	 * Get all video bookings for a user

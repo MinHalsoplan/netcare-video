@@ -18,12 +18,18 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.BeforeClass;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="classpath:/netcare-video-config.xml")
 @ActiveProfiles(profiles={"test", "db-embedded"})
 public class VideoRepositoryTest {
 
+	@BeforeClass
+	public static void init() {
+		System.getProperties().put("env.hostname", "localhost");
+	}
+	
 	@Autowired private CareUnitRepository cuRepo;
 	@Autowired private CareGiverRepository cgRepo;
 	@Autowired private PatientRepository pRepo;
