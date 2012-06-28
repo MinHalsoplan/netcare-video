@@ -38,6 +38,11 @@ public class VideoClientController extends ControllerSupport {
 		return "redirect:/web/dashboard";
 	}
 	
+	@RequestMapping(value="/start", method=RequestMethod.GET)
+	public String displayStart() {
+		return "redirect:/web/dashboard";
+	}
+	
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
 	public String displayDashboard(final Model m) {
 		getBookings(m);

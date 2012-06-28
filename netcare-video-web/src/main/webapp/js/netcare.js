@@ -75,12 +75,6 @@ $(document).ready(function() {
 		$(this).removeClass('spinner');
 	});
 	
-	var handleErrorCode = function(code) {
-		window.location.href = NC.getContextPath() + '/netcare/error/' + code;
-		return false;
-	};
-	
-		
 	/*
 	 * Select content when a text or number input field gains focus.
 	 */

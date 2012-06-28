@@ -60,9 +60,9 @@
 							if (v.started) {
 								tr.append(
 									$('<td>').append(
-										$('<a>').attr('href', NC.getContextPath() + '/video?booking=' + v.id).html(connect)
+										$('<a>').attr('href', NC.getContextPath() + '/web/video?booking=' + v.id).html(connect)
 									).append('<br>').append(
-										$('<a>').attr('href', NC.getContextPath() + '/notes?meeting=' + v.id).html(notes)
+										$('<a>').attr('href', NC.getContextPath() + '/web/notes?meeting=' + v.id).html(notes)
 									)
 								);
 							} else {
