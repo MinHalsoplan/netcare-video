@@ -30,12 +30,12 @@ public class VideoClientController extends ControllerSupport {
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String display() {
-		return "redirect:/media/dashboard";
+		return "redirect:/web/dashboard";
 	}
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public String displayHome() {
-		return "redirect:/media/dashboard";
+		return "redirect:/web/dashboard";
 	}
 	
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)

@@ -58,14 +58,6 @@ $(document).ready(function() {
 	
 	$('#pageLoading').css('height', $(window).height()).show();
 	$('#pageLoadingBox').show();
-	
-	$('#ajaxInProgress').ajaxStart(function() {
-		$(this).show();
-	});
-	
-	$('#ajaxInProgress').ajaxStop(function() {
-		$(this).hide();
-	});
 
 	/*
 	 * Bind all autocomplete boxes
@@ -146,17 +138,10 @@ $(document).ready(function() {
 	 * Setup ajax status mappings
 	 */
 	$.ajaxSetup({
-		dataType : 'json',
-		statusCode : {
-			404 : function() {
-				return handleErrorCode(404);
-			},
-			403 : function() {
-				return handleErrorCode(403);
-			},
-			500 : function() {
-				return handleErrorCode(500);
-			}
+		ajaxStart : function() { $('#ajaxInProgress').show(); },
+		ajaxStop : function() { $('#ajaxInProgress').hide(); },
+		ajaxError : function() {
+			NC.log('=== AJAX ERROR ===');
 		}
 	});
 	
@@ -174,9 +159,6 @@ $(document).ready(function() {
 			firstDay : 1,
 			minDate : +0
 		});
-		
-		//_support.loadMonths(function(data) { $(v).datepicker('option', 'monthNames', data); });
-		//_support.loadWeekdays(function(data) { $(v).datepicker('option', 'dayNamesMin', data); });
 		
 		$(v).siblings('span').css('cursor', 'pointer').click(function(e) {
 			$(v).datepicker('show');
