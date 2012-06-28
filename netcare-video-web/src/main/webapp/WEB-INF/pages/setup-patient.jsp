@@ -36,6 +36,7 @@
 					
 					var ajax = new NC.Ajax();
 					ajax.postWithParams('/user/saveUserData', { firstName : firstName, surName : surName }, function(data) {
+						NC.log('Redirecting to: ' + NC.getContextPath() + '/web/dashboard');
 						window.location = NC.getContextPath() + '/web/dashboard';
 					}, false);
 					

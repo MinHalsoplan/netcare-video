@@ -29,7 +29,7 @@ public class PatientEntity extends UserEntity {
 	@Column(name="civic_reg_number", length=16, nullable=false, unique=true)
 	private String civicRegistrationNumber;
 	
-	@Column(name="phone_number", unique=true)
+	@Column(name="phone_number")
 	private String phoneNumber;
 	
 	public static PatientEntity newEntity(final String name, final String civicRegistrationNumber) {

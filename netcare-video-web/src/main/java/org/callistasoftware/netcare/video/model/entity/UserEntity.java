@@ -37,7 +37,7 @@ public abstract class UserEntity {
 	@Column(length=64, nullable=false)
 	private String name;
 	
-	@Column(length=256, unique=true)
+	@Column(length=256)
 	private String email;
 	
 	UserEntity() {

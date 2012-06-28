@@ -28,6 +28,7 @@ public class UserApi extends ControllerSupport {
 	@RequestMapping(value="/saveUserData", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public ServiceResult<Boolean> saveUserData(@RequestParam(value="firstName") final String firstName, @RequestParam(value="surName") final String surName) {
+		getLog().debug("Saving user data {} {}", firstName, surName);
 		return this.service.saveUser(firstName + " " + surName);
 	}
 }
