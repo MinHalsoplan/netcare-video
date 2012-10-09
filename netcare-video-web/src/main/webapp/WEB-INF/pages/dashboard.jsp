@@ -4,11 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
 
 <%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
 
-<netcare:page>
-	<netcare:header>
+<mvk:page>
+	<mvk:header title="Netcare Video 2.0" resourcePath="/web/resources" contextPath="${pageContext.request.contextPath}">
+		<link rel="stylesheet" href="<c:url value="/css/netcare.css" />" />
+		<netcare:js />
 		<script type="text/javascript">
 			$(function() {
 				var connect = '<spring:message code="dashboard.booking.connect" />';
@@ -79,34 +82,56 @@
 				
 			});
 		</script>
-	</netcare:header>
-	<netcare:body>
-		<netcare:content>
-		
-			<h2><spring:message code="dashboard.bookings" /></h2>
-			<p>
-				<span class="label label-info"><spring:message code="label.information" /></span>
-				<spring:message code="dashboard.bookings.description" />
-			</p>
+	</mvk:header>
+	<mvk:body>
+	
+		<sec:authentication property="principal.username" var="username"/>
+		<mvk:pageHeader title="Videomöte"
+			loggedInUser="${username}"
+			loggedInAsText="Inloggad som : "
+			logoutUrl="/web/security/logout"
+			logoutText="Logga ut" />
 			
-			<section id="existingBookings">
-				<div class="alert alert-info">
-					<p><spring:message code="bookings.noBookings" /></p>
-				</div>
-				<table id="myBookings" class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th><spring:message code="dashboard.booking.name" /></th>
-							<th><spring:message code="dashboard.booking.start" /></th>
-							<th><spring:message code="dashboard.booking.end" /></th>
-							<th><spring:message code="dashboard.booking.participants" /></th>
-							<th><spring:message code="bookings.createdBy" /></th>
-							<th>&nbsp;</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
-			</section>
-		</netcare:content>
-	</netcare:body>
-</netcare:page>
+		<mvk:pageContent>
+			<c:url value="/home" var="start" />
+		
+			<mvk:leftMenu>
+				<mvk:menuItem active="true" label="Startsida" url="${start}" />
+			</mvk:leftMenu>
+			
+			<mvk:content title="Startsida">
+				<netcare:content>
+					<h2><spring:message code="dashboard.bookings" /></h2>
+					<p>
+						<span class="label label-info"><spring:message code="label.information" /></span>
+						<spring:message code="dashboard.bookings.description" />
+					</p>
+					
+					<section id="existingBookings">
+						<div class="alert alert-info">
+							<p><spring:message code="bookings.noBookings" /></p>
+						</div>
+						<table id="myBookings" class="table table-striped">
+							<thead>
+								<tr>
+									<th><spring:message code="dashboard.booking.name" /></th>
+									<th><spring:message code="dashboard.booking.start" /></th>
+									<th><spring:message code="dashboard.booking.end" /></th>
+									<th><spring:message code="dashboard.booking.participants" /></th>
+									<th><spring:message code="bookings.createdBy" /></th>
+									<th>&nbsp;</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</section>
+				</netcare:content>
+			</mvk:content>
+		
+		</mvk:pageContent>
+	
+		<mvk:pageFooter>
+		
+		</mvk:pageFooter>
+	</mvk:body>
+</mvk:page>

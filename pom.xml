@@ -8,6 +8,8 @@
   
   <properties>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<system.mode>test</system.mode>
+  	<database.mode>db-embedded</database.mode>
   </properties>
 
   <modules>

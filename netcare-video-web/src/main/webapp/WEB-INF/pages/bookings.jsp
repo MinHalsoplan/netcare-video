@@ -4,11 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
 
 <%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
 
-<netcare:page>
-	<netcare:header>
+<mvk:page>
+	<mvk:header title="Netcare Video 2.0" resourcePath="/web/resources" contextPath="${pageContext.request.contextPath}">
+		<link rel="stylesheet" href="<c:url value="/css/netcare.css" />" />
+		<netcare:js />
 		<script type="text/javascript">
 			$(function() {
 				
@@ -174,118 +177,142 @@
 				
 			});
 		</script>
-	</netcare:header>
-	<netcare:body>
-		<netcare:content>
+	</mvk:header>
+	<mvk:body>
+		<sec:authentication property="principal.username" var="username"/>
+		<mvk:pageHeader title="Videomöte"
+			loggedInUser="${username}"
+			loggedInAsText="Inloggad som : "
+			logoutUrl="/web/security/logout"
+			logoutText="Logga ut" />
+			
+		<mvk:pageContent>
+			
+			<c:url value="/home" var="start" />
 		
-			<h2><spring:message code="bookings.header" /></h2>
-			<p>
-				<span class="label label-info"><spring:message code="label.information" /></span>
-				<spring:message code="bookings.description" />
-			</p>
+			<mvk:leftMenu>
+				<mvk:menuItem active="true" label="Startsida" url="${start}" />
+			</mvk:leftMenu>
 			
-			<p style="text-align: right; padding-right: 20px">
-				<a id="showBookingForm" class="btn addButton"><spring:message code="bookings.create" /></a>
-			</p>
-			
-			<section id="booking-form" style="display:none;">
-				<form>
-					<fieldset>
-						<legend><spring:message code="bookings.form.information" /></legend>
-						<netcare:row>
-							<netcare:col span="3">
-								<div class="control-group">
-									<label class="control-label" for="name"><spring:message code="bookings.form.name" /></label>
-									<div class="controls">
-										<input type="text" name="name" id="name" class="input-large" />
-									</div>
-								</div>
-							</netcare:col>
-						</netcare:row>
-						<netcare:row>
-							<netcare:col span="3">
-								<div class="control-group">
-									<label class="control-label" for="description"><spring:message code="bookings.form.description" /></label>
-									<div class="controls">
-										<textarea rows="3" name="description" id="description" class="input-xlarge"></textarea>
-									</div>
-								</div>
-							</netcare:col>
-						</netcare:row>
-					</fieldset>
-					<fieldset>
-						<legend><spring:message code="bookings.form.dateTime" /></legend>
-						<netcare:row>
-							<netcare:col span="2">
-								<div class="control-group">
-									<label class="control-label" for="date"><spring:message code="bookings.form.date" /></label>
-									<div class="controls">
-										<input type="text" name="date" id="date" class="input-small" />
-									</div>
-								</div>
-							</netcare:col>
-							<netcare:col span="1">
-								<div class="control-group">
-									<label class="control-label" for="start"><spring:message code="bookings.form.start" /></label>
-									<div class="controls">
-										<input type="text" name="start" id="start" class="span1"/>
-									</div>
-								</div>
-							</netcare:col>
-							<netcare:col span="1">
-								<div class="control-group">
-									<label class="control-label" for="end"><spring:message code="bookings.form.end" /></label>
-									<div class="controls">
-										<input type="text" name="end" id="end" class="span1"/>
-									</div>
-								</div>
-							</netcare:col>
-						</netcare:row>
-					</fieldset>
-					<fieldset>
-						<legend><spring:message code="bookings.form.participants" /></legend>
-						<netcare:row>
-							<netcare:col span="9">
-								<label for="search"><spring:message code="bookings.form.search" /></label>
-								<input type="text" id="search" name="search" class="input-xlarge search-query" />
-							</netcare:col>
-						</netcare:row>
-						<netcare:row>
-							<netcare:col span="9" id="selectedUsers">
-								<p>
-									<ul></ul>
-								</p>
-							</netcare:col>
-						</netcare:row>
-					</fieldset>
-					
-					<div class="form-actions">
-						<button type="submit" class="btn btn-primary"><spring:message code="bookings.create" /></button>
-						<button type="reset" class="btn"><spring:message code="bookings.reset" /></button>
-					</div>
-					
-				</form>
-			</section>
-			
-			<section id="existingBookings">
-				<div class="alert alert-info" style="display: none;">
-					<p><spring:message code="bookings.noBookings" /></p>
-				</div>				
-				<table id="myBookings" class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th><spring:message code="dashboard.booking.name" /></th>
-							<th><spring:message code="dashboard.booking.start" /></th>
-							<th><spring:message code="dashboard.booking.end" /></th>
-							<th><spring:message code="dashboard.booking.participants" /></th>
-							<th><spring:message code="bookings.createdBy" /></th>
-							<th>&nbsp;</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
-			</section>
+			<spring:message code="bookings.header" var="bookingsHeader"/>
+			<mvk:content title="${bookingsHeader}">
 		
-		</netcare:content>
-	</netcare:body>
-</netcare:page>
+				<netcare:content>
+			
+					<h2>${bookingsHeader}</h2>
+					<p>
+						<span class="label label-info"><spring:message code="label.information" /></span>
+						<spring:message code="bookings.description" />
+					</p>
+					
+					<p style="text-align: right; padding-right: 20px">
+						<a id="showBookingForm" class="btn addButton"><spring:message code="bookings.create" /></a>
+					</p>
+					
+					<section id="booking-form" style="display:none;">
+						<form>
+							<fieldset>
+								<legend><spring:message code="bookings.form.information" /></legend>
+								<netcare:row>
+									<netcare:col span="3">
+										<div class="control-group">
+											<label class="control-label" for="name"><spring:message code="bookings.form.name" /></label>
+											<div class="controls">
+												<input type="text" name="name" id="name" class="input-large" />
+											</div>
+										</div>
+									</netcare:col>
+								</netcare:row>
+								<netcare:row>
+									<netcare:col span="3">
+										<div class="control-group">
+											<label class="control-label" for="description"><spring:message code="bookings.form.description" /></label>
+											<div class="controls">
+												<textarea rows="3" name="description" id="description" class="input-xlarge"></textarea>
+											</div>
+										</div>
+									</netcare:col>
+								</netcare:row>
+							</fieldset>
+							<fieldset>
+								<legend><spring:message code="bookings.form.dateTime" /></legend>
+								<netcare:row>
+									<netcare:col span="2">
+										<div class="control-group">
+											<label class="control-label" for="date"><spring:message code="bookings.form.date" /></label>
+											<div class="controls">
+												<input type="text" name="date" id="date" class="input-small" />
+											</div>
+										</div>
+									</netcare:col>
+									<netcare:col span="1">
+										<div class="control-group">
+											<label class="control-label" for="start"><spring:message code="bookings.form.start" /></label>
+											<div class="controls">
+												<input type="text" name="start" id="start" class="span1"/>
+											</div>
+										</div>
+									</netcare:col>
+									<netcare:col span="1">
+										<div class="control-group">
+											<label class="control-label" for="end"><spring:message code="bookings.form.end" /></label>
+											<div class="controls">
+												<input type="text" name="end" id="end" class="span1"/>
+											</div>
+										</div>
+									</netcare:col>
+								</netcare:row>
+							</fieldset>
+							<fieldset>
+								<legend><spring:message code="bookings.form.participants" /></legend>
+								<netcare:row>
+									<netcare:col span="9">
+										<label for="search"><spring:message code="bookings.form.search" /></label>
+										<input type="text" id="search" name="search" class="input-xlarge search-query" />
+									</netcare:col>
+								</netcare:row>
+								<netcare:row>
+									<netcare:col span="9" id="selectedUsers">
+										<p>
+											<ul></ul>
+										</p>
+									</netcare:col>
+								</netcare:row>
+							</fieldset>
+							
+							<div class="form-actions">
+								<button type="submit" class="btn btn-primary"><spring:message code="bookings.create" /></button>
+								<button type="reset" class="btn"><spring:message code="bookings.reset" /></button>
+							</div>
+							
+						</form>
+					</section>
+					
+					<section id="existingBookings">
+						<div class="alert alert-info" style="display: none;">
+							<p><spring:message code="bookings.noBookings" /></p>
+						</div>				
+						<table id="myBookings" class="table table-striped">
+							<thead>
+								<tr>
+									<th><spring:message code="dashboard.booking.name" /></th>
+									<th><spring:message code="dashboard.booking.start" /></th>
+									<th><spring:message code="dashboard.booking.end" /></th>
+									<th><spring:message code="dashboard.booking.participants" /></th>
+									<th><spring:message code="bookings.createdBy" /></th>
+									<th>&nbsp;</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</section>
+				
+				</netcare:content>
+			</mvk:content>
+		</mvk:pageContent>
+		
+		<mvk:pageFooter>
+		
+		</mvk:pageFooter>
+	</mvk:body>
+</mvk:page>

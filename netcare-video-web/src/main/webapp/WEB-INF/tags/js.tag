@@ -16,16 +16,15 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ tag language="java" pageEncoding="UTF-8" body-content="scriptless" %>
+<%@ tag language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
 
-
-<div class="row-fluid">
-	<div class="span12">
-		<jsp:doBody />
-	</div>
-</div>
-
-<netcare:menu />
+	<script type="text/javascript" src="<c:url value="/js/json2.js" />"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	
+	<script type="text/javascript" src="<c:url value='/js/netcare.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/js/netcare/Util.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/js/netcare/Ajax.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/js/netcare/PageMessages.js' />"></script>
+	
