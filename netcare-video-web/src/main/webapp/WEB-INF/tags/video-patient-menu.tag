@@ -20,12 +20,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="netcare"  uri="http://www.callistasoftware.org/netcare/tags"%>
 
 <script type="text/javascript">
 	$(function() {
 		var crn = '<sec:authentication property="principal.civicRegistrationNumber" />';
-		var format = new NC.Util().formatCrn(crn);
+		var format = NC.GLOBAL.formatCrn(crn);
 		
 		$('#crn').html(format);
 	});

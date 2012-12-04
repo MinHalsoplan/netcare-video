@@ -1,0 +1,34 @@
+@CHARSET "UTF-8";
+
+.actionBody .mvk-icon {
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-top: 10px;
+	margin-bottom: -10px;
+	height: 50px;
+	width: 30px;
+	display: inline-block;
+	
+}
+
+.mvk-icon.copy {
+	background-image: url(../css/images/toolbarIconsBlue.png);
+	background-position: -250px 0px;
+}
+
+.mvk-icon.delete {
+	background-image: url(../css/images/toolbarIconsBlue.png);
+	background-position: -105px 0px;
+}
+
+.mvk-icon.toggle {
+	background-image: url('../css/images/togglerClosed.png');
+}
+
+.mvk-icon.toggle:hover {
+	background-image: url('../css/images/togglerClosedBlue.png');
+}
+
+.mvk-icon.toggle-open {
+	background-image: url('../css/images/togglerOpen.png');
+}

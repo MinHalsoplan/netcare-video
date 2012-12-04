@@ -11,12 +11,14 @@ import org.callistasoftware.netcare.video.core.api.VideoBooking;
 import org.callistasoftware.netcare.video.core.api.VideoParticipant;
 import org.callistasoftware.netcare.video.model.entity.VideoMeetingEntity;
 import org.callistasoftware.netcare.video.model.entity.VideoParticipantEntity;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Implementation of a video booking dto
  * @author Marcus Krantz [marcus.krantz@callistaenterprise.se]
  *
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class VideoBookingImpl implements VideoBooking {
 
 	/**

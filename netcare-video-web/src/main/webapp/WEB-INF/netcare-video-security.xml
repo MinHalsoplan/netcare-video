@@ -25,9 +25,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-	<security:http security="none" pattern="/js/**" />
-	<security:http security="none" pattern="/css/**" />
-	<security:http security="none" pattern="/img/**" />
+	<security:http security="none" pattern="/web/resources/**" />
 	<security:http security="none" pattern="/index*" />
 	
 	<security:http security="none" pattern="/web/security/**" />

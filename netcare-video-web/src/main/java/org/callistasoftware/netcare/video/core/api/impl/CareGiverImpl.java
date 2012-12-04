@@ -6,16 +6,22 @@ import java.util.Collections;
 import org.callistasoftware.netcare.video.core.api.CareGiver;
 import org.callistasoftware.netcare.video.core.api.CareUnit;
 import org.callistasoftware.netcare.video.model.entity.CareGiverEntity;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class CareGiverImpl extends UserImpl implements CareGiver {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private final String hsaId;
-	private final CareUnit careUnit;
+	private String hsaId;
+	private CareUnit careUnit;
+	
+	CareGiverImpl() {
+		super();
+	}
 	
 	protected CareGiverImpl(Long id, String name, String email, final String hsaId, final CareUnit careUnit) {
 		super(id, name, email);

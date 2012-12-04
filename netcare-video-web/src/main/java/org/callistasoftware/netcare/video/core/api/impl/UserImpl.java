@@ -3,8 +3,10 @@ package org.callistasoftware.netcare.video.core.api.impl;
 import java.util.Collection;
 
 import org.callistasoftware.netcare.video.core.api.User;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public abstract class UserImpl implements User {
 
 	/**
@@ -12,10 +14,14 @@ public abstract class UserImpl implements User {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private final Long id;
-	private final String name;
-	private final String email;
+	private Long id;
+	private String name;
+	private String email;
 
+	UserImpl() {
+	
+	}
+	
 	protected UserImpl(final Long id, final String name, final String email) {
 		this.id = id;
 		this.name = name;

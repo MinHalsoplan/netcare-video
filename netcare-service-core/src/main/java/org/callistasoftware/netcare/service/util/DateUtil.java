@@ -41,4 +41,12 @@ public final class DateUtil {
 			return null;
 		}
 	}
+	
+	public static Date parse(final String dateTime) {
+		try {
+			return SDF.parse(dateTime);
+		} catch (final ParseException e) {
+			return null;
+		}
+	}
 }

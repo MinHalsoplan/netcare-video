@@ -4,14 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
 
-<%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="netcare"  uri="http://www.callistasoftware.org/netcare/tags"%>
+<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
 
 <mvk:page>
 	<mvk:header title="Netcare Video 2.0" resourcePath="/web/resources" contextPath="${pageContext.request.contextPath}">
-		<link rel="stylesheet" href="<c:url value="/css/netcare.css" />" />
-		<netcare:js />
+		<netcare:js resourcePath="/web/resources" />
+		<script type="text/javascript" src="<c:url value="/js/netcare-video.js" />" />
 		<script type="text/javascript">
 			$(function() {
 				var meeting = '<c:out value="${param.meeting}" />';
@@ -67,23 +67,21 @@
 			</mvk:leftMenu>
 			
 			<mvk:content title="Anteckningar">
-				<netcare:content>
-					<h2><spring:message code="notes.title" /></h2>
-					<p>
-						<span class="label label-info"><spring:message code="label.information" /></span>
-						<spring:message code="notes.titleDescription" />
-					</p>
+				<h2><spring:message code="notes.title" /></h2>
+				<p>
+					<span class="label label-info"><spring:message code="label.information" /></span>
+					<spring:message code="notes.titleDescription" />
+				</p>
+				
+				<section id="notes">
+					<div id="noteInfo" class="alert alert-info" style="display: none;">
+						<p><spring:message code="notes.noNotes" /></p>
+					</div>
 					
-					<section id="notes">
-						<div id="noteInfo" class="alert alert-info" style="display: none;">
-							<p><spring:message code="notes.noNotes" /></p>
-						</div>
-						
-						<div id="noteList">
-						
-						</div>	
-					</section>
-				</netcare:content>
+					<div id="noteList">
+					
+					</div>	
+				</section>
 			</mvk:content>
 		</mvk:pageContent>
 		

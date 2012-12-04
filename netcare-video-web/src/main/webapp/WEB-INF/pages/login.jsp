@@ -21,25 +21,27 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="netcare"  uri="http://www.callistasoftware.org/netcare/tags"%>
+<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
+<%@ taglib prefix="video" tagdir="/WEB-INF/tags" %>
 
-<netcare:page>
-	<netcare:header>
+<mvk:page>
+	<video:viewHeader>
 		<script type="text/javascript">
 			$(function() {
 				$('#modal-from-dom').modal('show');
 				$('input[name="j_username"]').focus();
 			});
 		</script>
-	</netcare:header>
+	</video:viewHeader>
 	<body>
 		<div class="modal-backdrop fade in"></div>
 		<div id="modal-from-dom" class="modal hide fade in" style="display: block;">
-			<form method="post" action="<spring:url value="/j_spring_security_check" />" class="form-stacked">
 				<div class="modal-header">
 					<h3>Logga in</h3>
 				</div>
 				<div class="modal-body">
+					<form method="post" action="<spring:url value="/j_spring_security_check" />" class="form-stacked">
 					<div class="clearfix">
 						<label for="j_username">Användarnamn</label>
 						<div class="input">
@@ -49,9 +51,8 @@
 				</div>
 				<div class="modal-footer">
 					<input class="btn btn-primary" type="submit" value="Logga in" />
+					</form>
 				</div>
-			
-			</form>	
 		</div>
 	</body>
-</netcare:page>
+</mvk:page>

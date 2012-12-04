@@ -12,7 +12,7 @@ import org.callistasoftware.netcare.service.util.DateUtil;
 import org.callistasoftware.netcare.video.core.api.MeetingNote;
 import org.callistasoftware.netcare.video.core.api.MeetingNoteFormBean;
 import org.callistasoftware.netcare.video.core.api.VideoBooking;
-import org.callistasoftware.netcare.video.core.api.VideoMeetingFormBean;
+import org.callistasoftware.netcare.video.core.api.VideoParticipant;
 import org.callistasoftware.netcare.video.core.api.impl.MeetingNoteImpl;
 import org.callistasoftware.netcare.video.core.api.impl.VideoBookingImpl;
 import org.callistasoftware.netcare.video.core.exception.ServiceException;
@@ -117,21 +117,38 @@ public class VideoBookingServiceImpl extends ServiceSupport implements VideoBook
 	}
 
 	@Override
-	public ServiceResult<VideoBooking> createNewVideoMeeting(
-			VideoMeetingFormBean data) {
+	public ServiceResult<VideoBooking> saveVideoMeeting(
+			VideoBooking data) {
 		log.info("Creating new video meeting {}", data.getName());
 		
 		final CareGiverEntity cg = this.cgRepo.findOne(getCurrentUserId());
-		final VideoMeetingEntity entity = VideoMeetingEntity.newEntity(data.getName(), DateUtil.parseDateTime(data.getDate(), data.getStart()), cg);
-		entity.setEndDateTime(DateUtil.parseDateTime(data.getDate(), data.getEnd()));
-		entity.setDescription(data.getDescription());
 		
-		for (int user : data.getParticipants()) {
-			final CareGiverEntity c = this.cgRepo.findOne((long) user);
+		final VideoMeetingEntity entity;
+		if (data.getId() == -1) {
+			entity = VideoMeetingEntity.newEntity(data.getName(), DateUtil.parse(data.getStart()), DateUtil.parse(data.getEnd()), cg);
+		} else {
+			entity = this.repo.findOne(data.getId());
+		}
+		
+		entity.setName(data.getName());
+		entity.setDescription(data.getDescription());
+		entity.setStartDateTime(DateUtil.parse(data.getStart()));
+		entity.setEndDateTime(DateUtil.parse(data.getEnd()));
+		
+		if (!entity.getParticipants().isEmpty()) {
+			for (final VideoParticipantEntity p : entity.getParticipants()) {
+				p.setBooking(null);
+			}
+			
+			entity.getParticipants().clear();
+		}
+		
+		for (final VideoParticipant u : data.getParticipants()) {
+			final CareGiverEntity c = this.cgRepo.findOne((long) u.getUser().getId());
 			if (c == null) {
-				final PatientEntity p = this.pRepo.findOne((long) user);
+				final PatientEntity p = this.pRepo.findOne((long) u.getUser().getId());
 				if (p == null) {
-					log.warn("Could not find any user matching " + user + " when creating a video meeting.");
+					log.warn("Could not find any user matching " + u.getUser().getId() + " when creating a video meeting.");
 				} else {
 					entity.addParticipant(p, true);
 				}
@@ -218,5 +235,15 @@ public class VideoBookingServiceImpl extends ServiceSupport implements VideoBook
 	@Override
 	public String getVideoServer() {
 		return this.rtmpServerUrl;
+	}
+
+	@Override
+	public ServiceResult<VideoBooking> getBooking(Long id) {
+		final VideoMeetingEntity meeting = this.repo.findOne(id);
+		if (!getCareGiver().getCareUnit().getHsaId().equals(meeting.getCareUnit().getHsaId())) {
+			throw new SecurityException("Care actor is not allowed to fetch meeting.");
+		}
+		
+		return ServiceResultImpl.createSuccessResult(VideoBookingImpl.newFromEntity(meeting), new GenericSuccessMessage());
 	}
 }

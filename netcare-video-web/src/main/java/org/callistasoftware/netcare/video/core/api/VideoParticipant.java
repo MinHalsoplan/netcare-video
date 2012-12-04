@@ -1,5 +1,9 @@
 package org.callistasoftware.netcare.video.core.api;
 
+import org.callistasoftware.netcare.video.core.api.impl.VideoParticipantImpl;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
+@JsonDeserialize(as=VideoParticipantImpl.class)
 public interface VideoParticipant {
 
 	/**

@@ -4,7 +4,6 @@ import org.callistasoftware.netcare.service.api.ServiceResult;
 import org.callistasoftware.netcare.video.core.api.MeetingNote;
 import org.callistasoftware.netcare.video.core.api.MeetingNoteFormBean;
 import org.callistasoftware.netcare.video.core.api.VideoBooking;
-import org.callistasoftware.netcare.video.core.api.VideoMeetingFormBean;
 import org.callistasoftware.netcare.video.core.exception.ServiceException;
 
 /**
@@ -15,6 +14,8 @@ import org.callistasoftware.netcare.video.core.exception.ServiceException;
 public interface VideoBookingService {
 	
 	String getVideoServer();
+	
+	ServiceResult<VideoBooking> getBooking(final Long id);
 
 	/**
 	 * Get all video bookings for a user
@@ -51,7 +52,7 @@ public interface VideoBookingService {
 	 * @param data
 	 * @return
 	 */
-	ServiceResult<VideoBooking> createNewVideoMeeting(final VideoMeetingFormBean data);
+	ServiceResult<VideoBooking> saveVideoMeeting(final VideoBooking data);
 	
 	/**
 	 * Delete a video meeting. Only a care giver working on the care unit that

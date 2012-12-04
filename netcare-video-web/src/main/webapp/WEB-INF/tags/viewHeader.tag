@@ -21,16 +21,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
+<%@ taglib prefix="netcare" uri="http://www.callistasoftware.org/netcare/tags"%>
+<%@ taglib prefix="video" tagdir="/WEB-INF/tags" %>
 
-<sec:authorize access="hasRole('ROLE_CAREGIVER')" var="isAdmin"/>
-<c:choose>
-	<c:when test="${isAdmin}">
-		<netcare:admin-menu />
-	</c:when>
-	<c:otherwise>
-		<netcare:patient-menu />
-	</c:otherwise>
-</c:choose>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="resourcePath" value="/web/resources" />
+
+<mvk:header title="Videomöte" resourcePath="${resourcePath}" contextPath="${contextPath}">
+	<netcare:css resourcePath="${resourcePath}" />
+	<link rel="stylesheet" href="<c:url value='${contextPath}/css/netcare-video.css' />" type="text/css" />
+	
+	<netcare:js resourcePath="${resourcePath}"/>
+	<script type="text/javascript" src="${contextPath}/js/netcare-video.js"></script>
+	
+	<video:templates />
+	
+	<%-- Custom javascripts go here --%>
+	<jsp:doBody />
+	
+</mvk:header>
 
 

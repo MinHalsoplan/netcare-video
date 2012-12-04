@@ -4,128 +4,91 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
 
-<%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="netcare"  uri="http://www.callistasoftware.org/netcare/tags"%>
+<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
+<%@ taglib prefix="video" tagdir="/WEB-INF/tags"%>
 
 <mvk:page>
-	<mvk:header title="Netcare Video 2.0" resourcePath="/web/resources" contextPath="${pageContext.request.contextPath}">
-		<link rel="stylesheet" href="<c:url value="/css/netcare.css" />" />
-		<netcare:js />
+	<sec:authentication property="principal" var="p"/>
+	<video:viewHeader>
+	
+		<sec:authorize access="hasRole('ROLE_CAREGIVER')">
+			<c:set var="isCareGiver" value="true" />
+			<c:set var="careUnitId" value="${p.careUnit.id}" />
+			<c:set var="user" value="${p.name} (${p.careUnit.name})" />
+		</sec:authorize>
+		
+		<sec:authorize access="hasRole('ROLE_PATIENT')">
+			<c:set var="user" value="${p.name}" />
+		</sec:authorize>
+	
 		<script type="text/javascript">
 			$(function() {
-				var connect = '<spring:message code="dashboard.booking.connect" />';
-				var notes = '<spring:message code="notes.title" />';
 				
-				var ajax = new NC.Ajax();
-				
-				var loadBookings = function() {
-					ajax.get('/meeting/list', function(data) {
-						
-						$('#myBookings tbody').empty();
-						
-						if (data.data.length == 0) {
-							$('#myBookings').hide();
-							$('#existingBookings div').show();
-						} else {
-							$('#myBookings').show();
-							$('#existingBookings div').hide();
-						}
-						
-						$.each(data.data, function(i, v) {
-							var tr = $('<tr>');
-							
-							tr.append(
-								$('<td>').html(v.name)
-							);
-							
-							tr.append(
-								$('<td>').html(v.start)
-							);
-							
-							tr.append(
-								$('<td>').html(v.end)
-							);
-							
-							var parts = '';
-							$.each(v.participants, function(idx, val) {
-								parts += val.user.name + '<br />';
-							});
-							
-							tr.append(
-								$('<td>').html(parts)
-							);
-							
-							tr.append(
-								$('<td>').html(v.createdBy.name)
-							);
-							
-							if (v.started) {
-								tr.append(
-									$('<td>').append(
-										$('<a>').attr('href', NC.getContextPath() + '/web/video?booking=' + v.id).html(connect)
-									).append('<br>').append(
-										$('<a>').attr('href', NC.getContextPath() + '/web/notes?meeting=' + v.id).html(notes)
-									)
-								);
-							} else {
-								tr.append($('<td>'));
-							}
-							
-							$('#myBookings tbody').append(tr);
-						});
-						
-					}, true);
+				var bParams = {
+					connect : '<spring:message code="dashboard.booking.connect" />',
+					notes : '<spring:message code="notes.title" />'
 				};
 				
-				loadBookings();
+				NCV.BOOKINGS.init(bParams);
 				
+				if ('${isCareGiver}' == 'true') {
+					
+					var aParams = {
+						careUnit : '${careUnitId}'
+					}
+					
+					NCV.ADMIN.init(aParams);
+				}
 			});
 		</script>
-	</mvk:header>
+	</video:viewHeader>
 	<mvk:body>
-	
-		<sec:authentication property="principal.username" var="username"/>
 		<mvk:pageHeader title="Videomöte"
-			loggedInUser="${username}"
+			loggedInUser="${user}"
 			loggedInAsText="Inloggad som : "
 			logoutUrl="/web/security/logout"
 			logoutText="Logga ut" />
 			
 		<mvk:pageContent>
 			<c:url value="/home" var="start" />
-		
-			<mvk:leftMenu>
-				<mvk:menuItem active="true" label="Startsida" url="${start}" />
-			</mvk:leftMenu>
 			
-			<mvk:content title="Startsida">
-				<netcare:content>
-					<h2><spring:message code="dashboard.bookings" /></h2>
-					<p>
-						<span class="label label-info"><spring:message code="label.information" /></span>
-						<spring:message code="dashboard.bookings.description" />
-					</p>
-					
-					<section id="existingBookings">
-						<div class="alert alert-info">
-							<p><spring:message code="bookings.noBookings" /></p>
+			<mvk:content title="Startsida" plain="true" noMenu="true">
+			
+				<sec:authorize access="hasRole('ROLE_CAREGIVER')">
+					<a id="create-new" href="<c:url value="/web/bookings/new" />" class="btn">Skapa videomöte</a>
+				</sec:authorize>
+				
+				<section id="bookings">
+					<div class="sectionLoader" style="display: none;">
+						<img src="<c:url value="/web/resources/images/loaders/ajax-loader-medium.gif" />" />
+						<span class="loaderMessage"></span>
+					</div>
+					<div id="bookingsContainer" style="display: none;">
+						<mvk:heading title="Just nu">
+							Klicka på ett möte för att ansluta till det
+						</mvk:heading>
+						<mvk:touch-list id="bookingsList"></mvk:touch-list>
+					</div>
+				</section>
+				
+				<sec:authorize access="hasRole('ROLE_CAREGIVER')">
+					<br />
+				
+					<section id="upcoming">
+						<div class="sectionLoader" style="display: none;">
+							<img src="<c:url value="/web/resources/images/loaders/ajax-loader-medium.gif" />" />
+							<span class="loaderMessage"></span>
 						</div>
-						<table id="myBookings" class="table table-striped">
-							<thead>
-								<tr>
-									<th><spring:message code="dashboard.booking.name" /></th>
-									<th><spring:message code="dashboard.booking.start" /></th>
-									<th><spring:message code="dashboard.booking.end" /></th>
-									<th><spring:message code="dashboard.booking.participants" /></th>
-									<th><spring:message code="bookings.createdBy" /></th>
-									<th>&nbsp;</th>
-								</tr>
-							</thead>
-							<tbody></tbody>
-						</table>
+						<div id="upcomingContainer" style="display: none;">
+							<mvk:heading title="Kommande">
+								<spring:message code="bookings.description" />
+							</mvk:heading>
+							<mvk:touch-list id="upcomingList"></mvk:touch-list>
+						</div>
 					</section>
-				</netcare:content>
+				</sec:authorize>
 			</mvk:content>
 		
 		</mvk:pageContent>

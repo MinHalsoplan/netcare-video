@@ -3,6 +3,10 @@ package org.callistasoftware.netcare.video.core.api;
 import java.io.Serializable;
 import java.util.List;
 
+import org.callistasoftware.netcare.video.core.api.impl.VideoBookingImpl;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
+@JsonDeserialize(as=VideoBookingImpl.class)
 public interface VideoBooking extends Serializable {
 
 	/**

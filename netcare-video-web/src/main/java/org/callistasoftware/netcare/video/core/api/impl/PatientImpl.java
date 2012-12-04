@@ -5,8 +5,10 @@ import java.util.Collections;
 
 import org.callistasoftware.netcare.video.core.api.Patient;
 import org.callistasoftware.netcare.video.model.entity.PatientEntity;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class PatientImpl extends UserImpl implements Patient {
 
 	/**
@@ -14,7 +16,11 @@ public class PatientImpl extends UserImpl implements Patient {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private final String civicRegistrationNumber;
+	private String civicRegistrationNumber;
+	
+	PatientImpl() {
+	
+	}
 	
 	PatientImpl(Long id, String name, String email, final String civicRegistrationNumber) {
 		super(id, name, email);

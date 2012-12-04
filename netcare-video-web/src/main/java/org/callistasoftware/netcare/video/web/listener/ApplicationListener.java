@@ -45,7 +45,7 @@ public class ApplicationListener extends ContextLoaderListener {
 			
 			final PatientEntity p = patientRepo.save(PatientEntity.newEntity("Peter Larsson", "191212121212"));
 			
-			final VideoMeetingEntity booking = VideoMeetingEntity.newEntity("Videomöte", new Date(System.currentTimeMillis()), cg);
+			final VideoMeetingEntity booking = VideoMeetingEntity.newEntity("Videomöte", new Date(System.currentTimeMillis()), null, cg);
 			booking.addParticipant(cg, true);
 			booking.addParticipant(cg2, false);
 			booking.addParticipant(cg3, false);

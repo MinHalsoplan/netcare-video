@@ -21,16 +21,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<%@ taglib prefix="netcare" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="netcare"  uri="http://www.callistasoftware.org/netcare/tags"%>
+<%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
 
-<netcare:page>
-	<netcare:header>
+<mvk:page>
+	<mvk:header title="Netcare Video 2.0" resourcePath="/web/resources" contextPath="${pageContext.request.contextPath}">
+		<netcare:js resourcePath="/web/resources" />
+		<script type="text/javascript" src="<c:url value="/js/netcare-video.js" />" />
 		<script type="text/javascript">
 			$(function() {
 				$('#modal-from-dom').modal('show');
 			});
 		</script>
-	</netcare:header>
+	</mvk:header>
 	<body>
 		<div class="modal-backdrop fade in"></div>
 		<div id="modal-from-dom" class="modal hide fade in" style="display: block;">
@@ -43,4 +46,4 @@
 			</div>
 		</div>
 	</body>
-</netcare:page>
+</mvk:page>

@@ -16,10 +16,21 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ tag language="java" pageEncoding="UTF-8" body-content="scriptless" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ tag language="java" pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
-	<jsp:doBody />
-</html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="video" tagdir="/WEB-INF/tags" %>
+
+<sec:authorize access="hasRole('ROLE_CAREGIVER')" var="isAdmin"/>
+<c:choose>
+	<c:when test="${isAdmin}">
+		<video:video-admin-menu />
+	</c:when>
+	<c:otherwise>
+		<video:video-patient-menu />
+	</c:otherwise>
+</c:choose>
+
+

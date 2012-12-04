@@ -2,7 +2,9 @@ package org.callistasoftware.netcare.video.core.api.impl;
 
 import org.callistasoftware.netcare.video.core.api.CareUnit;
 import org.callistasoftware.netcare.video.model.entity.CareUnitEntity;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class CareUnitImpl implements CareUnit {
 
 	/**
@@ -10,9 +12,11 @@ public class CareUnitImpl implements CareUnit {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private final Long id;
-	private final String hsaId;
-	private final String name;
+	private Long id;
+	private String hsaId;
+	private String name;
+	
+	CareUnitImpl() {}
 	
 	CareUnitImpl(final Long id, final String hsaId, final String name) {
 		this.id = id;

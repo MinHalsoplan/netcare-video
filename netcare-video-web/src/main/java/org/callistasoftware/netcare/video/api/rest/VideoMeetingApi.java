@@ -4,7 +4,6 @@ import org.callistasoftware.netcare.service.api.ServiceResult;
 import org.callistasoftware.netcare.video.core.api.MeetingNote;
 import org.callistasoftware.netcare.video.core.api.MeetingNoteFormBean;
 import org.callistasoftware.netcare.video.core.api.VideoBooking;
-import org.callistasoftware.netcare.video.core.api.VideoMeetingFormBean;
 import org.callistasoftware.netcare.video.core.exception.ServiceException;
 import org.callistasoftware.netcare.video.core.spi.VideoBookingService;
 import org.callistasoftware.netcare.video.web.controller.ControllerSupport;
@@ -23,14 +22,27 @@ public class VideoMeetingApi extends ControllerSupport {
 	@Autowired
 	private VideoBookingService service;
 	
-	@RequestMapping(value="/new", method=RequestMethod.POST, produces="application/json", consumes="application/json")
+	@RequestMapping(value="/", method=RequestMethod.POST, produces="application/json", consumes="application/json")
 	@ResponseBody
-	public ServiceResult<VideoBooking> createNewMeeting(@RequestBody final VideoMeetingFormBean data) {
-		getLog().info("Creating new video meeting");
-		return this.service.createNewVideoMeeting(data);
+	public ServiceResult<VideoBooking> newMeeting(@RequestBody final VideoBooking data) {
+		getLog().info("Create new video meeting");
+		return this.service.saveVideoMeeting(data);
 	}
 	
-	@RequestMapping(value="/{meeting}/delete", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/{id}", method=RequestMethod.POST, produces="application/json", consumes="application/json")
+	@ResponseBody
+	public ServiceResult<VideoBooking> updateMeeting(@PathVariable("id") final Long id, @RequestBody final VideoBooking data) {
+		getLog().info("Update video meeting");
+		return this.service.saveVideoMeeting(data);
+	}
+	
+	@RequestMapping(value="/{meeting}", method=RequestMethod.GET)
+	@ResponseBody
+	public ServiceResult<VideoBooking> getVideoBooking(@PathVariable("meeting") final Long id) {
+		return this.service.getBooking(id);
+	}
+	
+	@RequestMapping(value="/{meeting}", method=RequestMethod.DELETE, produces="application/json")
 	@ResponseBody
 	public ServiceResult<Boolean> deleteVideoMeeting(@PathVariable("meeting") final Long meeting) {
 		getLog().info("Delete video meeting {}", meeting);

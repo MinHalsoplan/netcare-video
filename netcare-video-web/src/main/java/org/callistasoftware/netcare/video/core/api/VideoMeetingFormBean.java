@@ -2,6 +2,9 @@ package org.callistasoftware.netcare.video.core.api;
 
 import java.io.Serializable;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class VideoMeetingFormBean implements Serializable {
 
 	/**

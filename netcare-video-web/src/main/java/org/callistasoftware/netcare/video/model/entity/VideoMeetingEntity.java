@@ -48,26 +48,32 @@ public class VideoMeetingEntity {
 	@ManyToOne(optional=false)
 	private CareGiverEntity createdBy;
 	
-	@OneToMany(mappedBy="booking", cascade={ CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="booking", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private List<VideoParticipantEntity> participants;
 	
-	@OneToMany(cascade={ CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private List<MeetingNoteEntity> notes;
 
 	VideoMeetingEntity() {}
 	
-	VideoMeetingEntity(final String name, final Date start, final CareGiverEntity createdBy) {
+	VideoMeetingEntity(final String name, final Date start, final Date end, final CareGiverEntity createdBy) {
 		this.setName(name);
 		this.setParticipants(new ArrayList<VideoParticipantEntity>());
 		this.setStartDateTime(start);
 		this.setStarted(false);
-		this.setEndDateTime(new Date(start.getTime() + (60000 * 60)));
+		
+		if (end == null) {
+			this.setEndDateTime(new Date(start.getTime() + (60000 * 60)));
+		} else {
+			this.setEndDateTime(end);
+		}
+		
 		this.setCreatedBy(createdBy);
 		this.setCareUnit(createdBy.getCareUnit());
 	}
 	
-	public static VideoMeetingEntity newEntity(final String name, final Date start, final CareGiverEntity createdBy) {
-		return new VideoMeetingEntity(name, start, createdBy);
+	public static VideoMeetingEntity newEntity(final String name, final Date start, final Date end, final CareGiverEntity createdBy) {
+		return new VideoMeetingEntity(name, start, end, createdBy);
 	}
 	
 	public Long getId() {
@@ -82,7 +88,7 @@ public class VideoMeetingEntity {
 		return startDateTime;
 	}
 
-	void setStartDateTime(Date start) {
+	public void setStartDateTime(Date start) {
 		this.startDateTime = start;
 	}
 
@@ -126,7 +132,7 @@ public class VideoMeetingEntity {
 		return name;
 	}
 
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

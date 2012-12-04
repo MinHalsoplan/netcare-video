@@ -44,7 +44,7 @@ public class VideoRepositoryTest {
 		final CareGiverEntity cg = this.cgRepo.save(CareGiverEntity.newEntity("Dr. Hook", "hsa-user", cu));
 		final PatientEntity p = this.pRepo.save(PatientEntity.newEntity("Marcus", "191212121212"));
 		
-		final VideoMeetingEntity booking = VideoMeetingEntity.newEntity("Videomöte", new Date(System.currentTimeMillis() - 1800), cg);
+		final VideoMeetingEntity booking = VideoMeetingEntity.newEntity("Videomöte", new Date(System.currentTimeMillis() - 1800), null, cg);
 		booking.addParticipant(cg, true);
 		booking.addParticipant(p, false);
 		this.repo.save(booking);
