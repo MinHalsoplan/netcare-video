@@ -3,6 +3,7 @@ package org.callistasoftware.netcare.video
 	import flash.events.NetStatusEvent;
 	import flash.media.Camera;
 	import flash.media.Microphone;
+	import flash.media.SoundCodec;
 
 	public class VideoProducer extends VideoClientSupport
 	{
@@ -26,8 +27,11 @@ package org.callistasoftware.netcare.video
 			}
 			
 			if (this.mic == null) {
-				this.mic = Microphone.getMicrophone();
-				this.mic.rate = 44;
+				this.mic = Microphone.getEnhancedMicrophone();
+				this.mic.codec = SoundCodec.SPEEX;
+				this.mic.framesPerPacket = 1;
+				this.mic.setSilenceLevel(0, 2000);
+				this.mic.gain = 50;
 			}
 			
 			this.stream.attachCamera(camera);

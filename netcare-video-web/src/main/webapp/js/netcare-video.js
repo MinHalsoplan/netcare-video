@@ -401,6 +401,136 @@ var NCV = {
 		}
 		
 		return my;
+	})(),
+	
+	VIDEO : (function() {
+		var _participants;
+		var _currentMovieStar;
+		
+		var findParticipant = function(id) {
+			for (var i = 0; i < _participants.length; i++) {
+				var part = _participants[i];
+				if (part.user.id == id) {
+					return part;
+				}
+			}
+		};
+		
+		var my = {};
+		
+		my.init = function(params) {
+			var that = this;
+			this.params = params;
+			
+			my.loadParticipants(that);
+		};
+		
+		my.loadParticipants = function(my) {
+			new NC.Ajax().get('/meeting/' + my.params.meetingId, function(data) {
+				
+				var meeting = data.data;
+				_participants = meeting.participants;
+				
+				$.each(meeting.participants, function(i, v) {
+					
+					$('#participants').append(
+						$('<div>').prop('id', 'thumbnail-' + v.user.id)
+					);
+					
+					my.renderVideo(v);
+					
+				});
+			});
+		};
+		
+		var getThumbnailObject = function(part) {
+			var serverUrl = '';
+			if (part.user.id == my.params.userId) {
+				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'producer', 225, 169);
+			} else {
+				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'consumer', 225, 169);
+			}
+			
+			return {
+				id : part.user.id,
+				url : serverUrl,
+				width : 225,
+				height : 169,
+				name : part.user.name
+			};
+		};
+		
+		var getScreenObject = function(part) {
+			var serverUrl = '';
+			if (part.user.id == my.params.userId) {
+				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'producer', 640, 480);
+			} else {
+				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'consumer', 640, 480);
+			}
+			
+			return {
+				id : part.user.id,
+				url : serverUrl,
+				width : 640,
+				height : 480,
+				name : part.user.name
+			};
+		};
+		
+		var constructUrl = function(url, stream, type, width, height) {
+			return NC.getContextPath() + '/video-client.swf?server=' + url + '&stream=' + stream + '&type=' + type + '&width=' + width +'&height=' + height;
+		};
+		
+		var constructObject = function(id, url, width, height, name) {
+			return {
+				id : id,
+				url : url,
+				width : width,
+				height : height,
+				name : name
+			};
+		};
+		
+		my.initListener = function(my, elem) {
+			$(elem).click(function(e) {
+				e.preventDefault();
+				
+				if (_currentMovieStar != undefined) {
+					$('#movieFrame').find('object').remove();
+					my.renderVideo(_currentMovieStar);
+				}
+				
+				var userId = $(this).prop('id');
+				NC.log('User ' + userId + ' clicked... zooming');
+				
+				var part = findParticipant(userId);
+				my.renderMovieVideo(part);
+				_currentMovieStar = part;
+			});
+		};
+		
+		my.renderVideo = function(part) {
+			NC.log('Render thumbnail video for: ' + part.user.id);
+			var obj = getThumbnailObject(part);
+			var dom = _.template( $('#videoThumbnail').html() )(obj);
+			$('#thumbnail-' + part.user.id).replaceWith($(dom));
+			
+			my.initListener(my, '#thumbnail-' + part.user.id + ' a');
+		};
+		
+		my.renderMovieVideo = function(part) {
+			NC.log('Suspending thumbnail video for ' + part.user.id);
+			$('#thumbnail-' + part.user.id).find('.video-participant').empty().append(
+				$('<p>').css('font-style', 'italic').css('text-align', 'center').css('padding-top', '80px').html('Visas nu i videorutan')
+			);
+			
+			NC.log('Render movie screen for ' + part.user.id);
+			var obj = getScreenObject(part);
+			var dom = _.template( $('#videoScreen').html() )(obj);
+			$('#movieFrame').empty().removeClass('thumbnail').append($(dom));
+		};
+		
+		return my;
 	})()
 }
 

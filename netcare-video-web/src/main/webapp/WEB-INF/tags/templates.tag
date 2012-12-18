@@ -78,4 +78,28 @@
 </li>
 </script>
 
+<script id="videoThumbnail" type="text/template">
+<div id="thumbnail-{{id}}">
+	<div class="thumbnail video-participant" style="width: {{width}}px; height: {{height}}px;">
+		<object width="{{width}}" height="{{height}}">
+			<param name="movie" value="{{url}}" />
+			<embed src="{{url}}" type="application/x-shockwave-flash" width="{{width}}" height="{{height}}"/>
+		</object>
+	</div>
+	<div class="caption">
+		<h5>{{name}} | <a id="{{id}}" href="#">Visa i videoruta</a></h5>
+	</div>
+</div>
+</script>
+
+<script id="videoScreen" type="text/template">
+<div id="star-{{id}}">
+	<div class="thumbnail video-participant" style="width: {{width}}px; height: {{height}}px;">
+		<object width="{{width}}" height="{{height}}">
+			<param name="movie" value="{{url}}" />
+			<embed src="{{url}}" type="application/x-shockwave-flash" width="{{width}}" height="{{height}}"/>
+		</object>
+	</div>
+</div>
+</script>
 
