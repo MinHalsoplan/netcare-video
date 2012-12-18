@@ -61,15 +61,9 @@
   						<pluginExecutions>
   							<pluginExecution>
   								<pluginExecutionFilter>
-  									<groupId>
-  										org.sonatype.flexmojos
-  									</groupId>
-  									<artifactId>
-  										flexmojos-maven-plugin
-  									</artifactId>
-  									<versionRange>
-  										[4.0-RC2,)
-  									</versionRange>
+  									<groupId>org.sonatype.flexmojos</groupId>
+  									<artifactId>flexmojos-maven-plugin</artifactId>
+  									<versionRange>[4.0-RC2,)</versionRange>
   									<goals>
   										<goal>test-compile</goal>
   										<goal>compile-swc</goal>

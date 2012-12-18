@@ -28,10 +28,15 @@ package org.callistasoftware.netcare.video
 			
 			if (this.mic == null) {
 				this.mic = Microphone.getEnhancedMicrophone();
-				this.mic.codec = SoundCodec.SPEEX;
-				this.mic.framesPerPacket = 1;
-				this.mic.setSilenceLevel(0, 2000);
-				this.mic.gain = 50;
+				if (this.mic != null) {
+					this.mic.codec = SoundCodec.SPEEX;
+					this.mic.framesPerPacket = 1;
+					this.mic.setSilenceLevel(0, 2000);
+					this.mic.gain = 50;
+				} else {
+					this.mic = Microphone.getMicrophone();
+					this.mic.rate = 44;
+				}
 			}
 			
 			this.stream.attachCamera(camera);
