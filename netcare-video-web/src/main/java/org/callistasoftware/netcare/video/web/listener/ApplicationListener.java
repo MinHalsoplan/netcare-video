@@ -36,21 +36,22 @@ public class ApplicationListener extends ContextLoaderListener {
 			final VideoMeetingRepository repo = wc.getBean(VideoMeetingRepository.class);
 			
 			final CareUnitEntity cu = cuRepo.save(CareUnitEntity.newEntity("care-unit-hsa", "Callista vårdcentral")); 
-			final CareGiverEntity cg = cgRepo.save(CareGiverEntity.newEntity("Dr. Marcus", "hsa-id-1234", cu));
+			final CareGiverEntity cg = cgRepo.save(CareGiverEntity.newEntity("Marcus Andersson", "hsa-id-1234", cu));
 			
-			final CareGiverEntity cg2 = cgRepo.save(CareGiverEntity.newEntity("Anders", "anders", cu));
-			final CareGiverEntity cg3 = cgRepo.save(CareGiverEntity.newEntity("Hans", "hans", cu));
-			final CareGiverEntity cg4 = cgRepo.save(CareGiverEntity.newEntity("Christian", "christian", cu));
-			final CareGiverEntity cg5 = cgRepo.save(CareGiverEntity.newEntity("Jasmina", "jasmina", cu));
+			final CareGiverEntity cg2 = cgRepo.save(CareGiverEntity.newEntity("Anders Hansson", "anders", cu));
+			cgRepo.save(CareGiverEntity.newEntity("Hans Krisp", "hans", cu));
+			cgRepo.save(CareGiverEntity.newEntity("Christian Lökin", "christian", cu));
+			cgRepo.save(CareGiverEntity.newEntity("Jasmina Blom", "jasmina", cu));
 			
-			final PatientEntity p = patientRepo.save(PatientEntity.newEntity("Peter Larsson", "191212121212"));
+			final PatientEntity p = patientRepo.save(PatientEntity.newEntity("Peter Storch", "191212121212"));
 			
 			final VideoMeetingEntity booking = VideoMeetingEntity.newEntity("Videomöte", new Date(System.currentTimeMillis()), null, cg);
 			booking.addParticipant(cg, true);
 			booking.addParticipant(cg2, false);
-			booking.addParticipant(cg3, false);
-			booking.addParticipant(cg4, false);
-			booking.addParticipant(cg5, false);
+			booking.addParticipant(p, false);
+			//booking.addParticipant(cg3, false);
+			//booking.addParticipant(cg4, false);
+			//booking.addParticipant(cg5, false);
 			
 			repo.save(booking);
 		}

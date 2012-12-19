@@ -107,6 +107,7 @@ var NCV = {
 		
 		self.init = function(params) {
 			var self = this;
+			this.params = params;
 			this.renderBookings(self);
 		};
 		
@@ -120,7 +121,7 @@ var NCV = {
 				
 				$.each(data.data, function(i, v) {
 					if (v.started) {
-						self.renderBookingItem(v);
+						self.renderBookingItem(self, v);
 					}
 				});
 				
@@ -135,7 +136,7 @@ var NCV = {
 			});
 		};
 		
-		self.renderBookingItem = function(booking) {
+		self.renderBookingItem = function(self, booking) {
 			var dom = _.template( $('#bookingItem').html() )(booking);
 			$('#bookingsList').append($(dom));
 			
@@ -153,7 +154,12 @@ var NCV = {
 			
 			$('#participants-' + booking.id).html(parts);
 			
-			this.initNoteListener('#show-notes-' + booking.id, booking);
+			if (self.params.isCareGiver == 'true') {
+				this.initNoteListener('#show-notes-' + booking.id, booking);
+			} else {
+				$('#show-notes-' + booking.id).hide();
+			}
+			
 			this.initItemListener(liElem, booking);
 			
 			var expander = $('<div>').addClass('mvk-icon toggle').click(function(e) {

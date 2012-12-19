@@ -25,6 +25,18 @@
 <%@ taglib prefix="netcare" uri="http://www.callistasoftware.org/netcare/tags"%>
 <%@ taglib prefix="video" tagdir="/WEB-INF/tags" %>
 
+<sec:authentication property="principal" var="p" scope="request" />
+
+<sec:authorize access="hasRole('ROLE_CAREGIVER')">
+	<c:set var="isCareGiver" value="true" scope="request"/>
+	<c:set var="careUnitId" value="${p.careUnit.id}" scope="request"/>
+	<c:set var="user" value="${p.name} (${p.careUnit.name})" scope="request"/>
+</sec:authorize>
+
+<sec:authorize access="hasRole('ROLE_PATIENT')">
+	<c:set var="user" value="${p.name}" scope="request"/>
+</sec:authorize>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="resourcePath" value="/web/resources" />
 

@@ -13,22 +13,13 @@
 	<sec:authentication property="principal" var="p"/>
 	<video:viewHeader>
 	
-		<sec:authorize access="hasRole('ROLE_CAREGIVER')">
-			<c:set var="isCareGiver" value="true" />
-			<c:set var="careUnitId" value="${p.careUnit.id}" />
-			<c:set var="user" value="${p.name} (${p.careUnit.name})" />
-		</sec:authorize>
-		
-		<sec:authorize access="hasRole('ROLE_PATIENT')">
-			<c:set var="user" value="${p.name}" />
-		</sec:authorize>
-	
 		<script type="text/javascript">
 			$(function() {
 				
 				var bParams = {
 					connect : '<spring:message code="dashboard.booking.connect" />',
-					notes : '<spring:message code="notes.title" />'
+					notes : '<spring:message code="notes.title" />',
+					isCareGiver : '${isCareGiver}'
 				};
 				
 				NCV.BOOKINGS.init(bParams);

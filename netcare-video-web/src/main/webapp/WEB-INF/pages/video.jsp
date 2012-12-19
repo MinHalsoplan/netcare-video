@@ -24,9 +24,8 @@
 		</script>
 	</video:viewHeader>
 	<mvk:body>
-		<sec:authentication property="principal.username" var="username"/>
 		<mvk:pageHeader title="Videomöte"
-			loggedInUser="${username}"
+			loggedInUser="${user}"
 			loggedInAsText="Inloggad som : "
 			logoutUrl="/web/security/logout"
 			logoutText="Logga ut" />

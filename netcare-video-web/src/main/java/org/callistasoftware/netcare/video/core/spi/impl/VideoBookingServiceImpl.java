@@ -240,8 +240,18 @@ public class VideoBookingServiceImpl extends ServiceSupport implements VideoBook
 	@Override
 	public ServiceResult<VideoBooking> getBooking(Long id) {
 		final VideoMeetingEntity meeting = this.repo.findOne(id);
-		if (!getCareGiver().getCareUnit().getHsaId().equals(meeting.getCareUnit().getHsaId())) {
-			throw new SecurityException("Care actor is not allowed to fetch meeting.");
+		
+		// Is current principal part of the booking
+		final List<VideoParticipantEntity> parts = meeting.getParticipants();
+		boolean found = false;
+		for (final VideoParticipantEntity p : parts) {
+			if (p.getUser().getId().equals(getCurrentUser().getId())) {
+				found = true;
+			}
+		}
+		
+		if (!found) {
+			throw new SecurityException("User is not participant in meeting " + id);
 		}
 		
 		return ServiceResultImpl.createSuccessResult(VideoBookingImpl.newFromEntity(meeting), new GenericSuccessMessage());
