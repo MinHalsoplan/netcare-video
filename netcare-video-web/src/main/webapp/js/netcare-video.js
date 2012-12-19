@@ -153,6 +153,7 @@ var NCV = {
 			
 			$('#participants-' + booking.id).html(parts);
 			
+			this.initNoteListener('#show-notes-' + booking.id, booking);
 			this.initItemListener(liElem, booking);
 			
 			var expander = $('<div>').addClass('mvk-icon toggle').click(function(e) {
@@ -164,6 +165,15 @@ var NCV = {
 			
 			liElem.find('.actionBody').css('text-align', 'right').css('padding-right', '40px')
 			.append(expander);
+		};
+		
+		self.initNoteListener = function(elem, booking) {
+			$(elem).on('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				
+				window.location = NC.getContextPath() + '/web/notes?meeting=' + booking.id;
+			});
 		};
 		
 		self.initItemListener = function(elem, booking) {
@@ -515,19 +525,73 @@ var NCV = {
 			var dom = _.template( $('#videoThumbnail').html() )(obj);
 			$('#thumbnail-' + part.user.id).replaceWith($(dom));
 			
-			my.initListener(my, '#thumbnail-' + part.user.id + ' a');
+			if (obj.id == my.params.userId) {
+				my.initQuitListener(my, part);
+			}
+			
+			my.initListener(my, '#' + part.user.id);
+		};
+		
+		my.initQuitListener = function(my, part) {
+			$('#quit-' + part.user.id).find('a').click(function(e) {
+				NC.log('User ' + part.user.id + ' is leaving the meeting...');
+				e.preventDefault();
+				new NC.Ajax().post('/meeting/' + my.params.meetingId + '/leave', null, function() {
+					window.location = NC.getContextPath() + '/web/dashboard';
+				});
+			});
+			
+			$('#quit-' + part.user.id).show();
 		};
 		
 		my.renderMovieVideo = function(part) {
 			NC.log('Suspending thumbnail video for ' + part.user.id);
 			$('#thumbnail-' + part.user.id).find('.video-participant').empty().append(
-				$('<p>').css('font-style', 'italic').css('text-align', 'center').css('padding-top', '80px').html('Visas nu i videorutan')
+				$('<p>').css('font-style', 'italic').css('text-align', 'center').css('padding-top', '80px').html('Visas nu i storbild')
 			);
 			
 			NC.log('Render movie screen for ' + part.user.id);
 			var obj = getScreenObject(part);
 			var dom = _.template( $('#videoScreen').html() )(obj);
 			$('#movieFrame').empty().removeClass('thumbnail').append($(dom));
+		};
+		
+		return my;
+	})(),
+	
+	NOTE_TAKING : (function() {
+		var my = {};
+		
+		my.init = function(params) {
+			var that = this;
+			this.params = params;
+			
+			my.initListeners(that);
+		};
+		
+		my.initListeners = function(my) {
+			
+			$('#note-form').submit(function(e) {
+				e.preventDefault();
+				
+				NC.log('Building note...');
+				var text = $('#note').val();
+				
+				if (text.length != 0) {
+					
+					NC.log('Saving note...');
+					var data = new Object();
+					data.note = text;
+					data.meetingId = my.params.meetingId;
+					
+					new NC.Ajax().post('/meeting/' + my.params.meetingId + '/note/new', data, function(data) {
+						$('#note').val('');
+						$('#my-notes').append(
+							$('<span>').css('display', 'block').css('font-style', 'italic').css('font-size', '12px').html(text)
+						);
+					});
+				}
+			});
 		};
 		
 		return my;

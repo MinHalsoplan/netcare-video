@@ -12,6 +12,8 @@ public class MeetingNoteFormBean implements Serializable {
 	private Long meetingId;
 	private String note;
 	
+	MeetingNoteFormBean() {}
+	
 	public Long getMeetingId() {
 		return meetingId;
 	}

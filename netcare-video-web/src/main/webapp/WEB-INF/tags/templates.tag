@@ -17,10 +17,9 @@
 
 --%>
 <%@ tag language="java" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
 <%@ taglib prefix="netcare" uri="http://www.callistasoftware.org/netcare/tags"%>
-
 <%@ taglib prefix="video" tagdir="/WEB-INF/tags"%>
 
 <script id="bookingItem" type="text/template">
@@ -58,6 +57,11 @@
 			
 		</div>
 	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<a id="show-notes-{{id}}" href="#">Visa anteckningar</a>
+		</div>
+	</div>
 </div>
 </script>
 
@@ -87,7 +91,16 @@
 		</object>
 	</div>
 	<div class="caption">
-		<h5>{{name}} | <a id="{{id}}" href="#">Visa i videoruta</a></h5>
+		<span>
+			<strong>{{name}}</strong> 
+			<small> | </small>
+		</span>
+		<span> 
+			<a id="{{id}}" href="#"><small>Visa i storbild</small></a>
+		</span>
+		<span id="quit-{{id}}" style="display: none;">
+			<small> | </small><a href="#">Avsluta</a>
+		</span>
 	</div>
 </div>
 </script>

@@ -7,11 +7,10 @@
 
 <%@ taglib prefix="netcare"  uri="http://www.callistasoftware.org/netcare/tags"%>
 <%@ taglib prefix="mvk" uri="http://www.callistasoftware.org/mvk/tags"%>
+<%@ taglib prefix="video" tagdir="/WEB-INF/tags"%>
 
 <mvk:page>
-	<mvk:header title="Netcare Video 2.0" resourcePath="/web/resources" contextPath="${pageContext.request.contextPath}">
-		<netcare:js resourcePath="/web/resources" />
-		<script type="text/javascript" src="<c:url value="/js/netcare-video.js" />" />
+	<video:viewHeader>
 		<script type="text/javascript">
 			$(function() {
 				var meeting = '<c:out value="${param.meeting}" />';
@@ -50,32 +49,22 @@
 				
 			});
 		</script>
-	</mvk:header>
+	</video:viewHeader>
 	<mvk:body>
 		<sec:authentication property="principal.username" var="username"/>
 		<mvk:pageHeader title="Videomöte"
-			loggedInUser="${username}"
+			loggedInUser="${user}"
 			loggedInAsText="Inloggad som : "
 			logoutUrl="/web/security/logout"
 			logoutText="Logga ut" />
 			
 		<mvk:pageContent>
-			<c:url value="/home" var="start" />
-		
-			<mvk:leftMenu>
-				<mvk:menuItem active="true" label="Startsida" url="${start}" />
-			</mvk:leftMenu>
+			<c:url value="/web/dashboard" var="start" />
 			
-			<mvk:content title="Anteckningar">
-				<h2><spring:message code="notes.title" /></h2>
-				<p>
-					<span class="label label-info"><spring:message code="label.information" /></span>
-					<spring:message code="notes.titleDescription" />
-				</p>
-				
-				<section id="notes">
+			<mvk:content backTitle="Tillbaka" noMenu="true" backUrl="${start}" backToWhat="till Startsidan">
+				<section id="notes" style="margin-top: 20px;">
 					<div id="noteInfo" class="alert alert-info" style="display: none;">
-						<p><spring:message code="notes.noNotes" /></p>
+						<spring:message code="notes.noNotes" />
 					</div>
 					
 					<div id="noteList">
