@@ -84,10 +84,10 @@
 
 <script id="videoThumbnail" type="text/template">
 <div id="thumbnail-{{id}}">
-	<div class="thumbnail video-participant" style="width: {{width}}px; height: {{height}}px;">
-		<object width="{{width}}" height="{{height}}">
+	<div class="thumbnail video-participant" style="width: 225px; height: 169px;">
+		<object width="{{width}}" width="{{height}}">
 			<param name="movie" value="{{url}}" />
-			<embed src="{{url}}" type="application/x-shockwave-flash" width="{{width}}" height="{{height}}"/>
+			<embed src="{{url}}" type="application/x-shockwave-flash" width="{{width}}" height="{{height}}" />
 		</object>
 	</div>
 	<div class="caption">

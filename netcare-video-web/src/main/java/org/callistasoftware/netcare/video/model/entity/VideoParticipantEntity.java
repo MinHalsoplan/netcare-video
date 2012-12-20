@@ -21,6 +21,9 @@ public class VideoParticipantEntity {
 	@Column(nullable=false)
 	private String stream;
 	
+	@Column(nullable=false)
+	private String largeStream;
+	
 	@Column
 	private boolean owner;
 	
@@ -41,6 +44,7 @@ public class VideoParticipantEntity {
 		this.setOwner(owner);
 		
 		this.setStream(UUID.randomUUID().toString());
+		this.setLargeStream(UUID.randomUUID().toString());
 	}
 	
 	public Long getId() {
@@ -57,6 +61,14 @@ public class VideoParticipantEntity {
 
 	void setStream(String stream) {
 		this.stream = stream;
+	}
+	
+	public String getLargeStream() {
+		return largeStream;
+	}
+
+	void setLargeStream(String stream) {
+		this.largeStream = stream;
 	}
 
 	public boolean isOwner() {

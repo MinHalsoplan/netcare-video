@@ -26,6 +26,12 @@
 				var width:uint = this.parameters["width"];
 				var height:uint = this.parameters["height"];
 				
+				var winWidth:uint = this.parameters["winWidth"];
+				var winHeight:uint = this.parameters["winHeight"];
+				
+				video.height = winHeight;
+				video.width = winWidth;
+				
 				errs = false;
 				if (serverUrl == null || serverUrl.length == 0) {
 					Alert.show("No server url set.");
@@ -60,7 +66,12 @@
 			}
 			
 			protected function onVideo(event:org.callistasoftware.netcare.video.VideoEvent):void {
-				video.addChild(event.getVideo());
+			
+				var videoStream:Video = event.getVideo();
+				videoStream.height = video.height;
+				videoStream.width = video.width;
+			
+				video.addChild(videoStream);
 			}
 			
 			protected function onNoVideo(event:org.callistasoftware.netcare.video.VideoEvent):void {
@@ -72,5 +83,5 @@
 	<fx:Declarations>
 		
 	</fx:Declarations>
-	<s:VideoDisplay x="0" y="0" id="video" />	
+	<s:VideoDisplay x="0" y="0" id="video" scaleMode="stretch"/>	
 </s:Application>

@@ -462,9 +462,9 @@ var NCV = {
 		var getThumbnailObject = function(part) {
 			var serverUrl = '';
 			if (part.user.id == my.params.userId) {
-				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'producer', 225, 169);
+				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'producer', 640, 480, 225, 169);
 			} else {
-				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'consumer', 225, 169);
+				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'consumer', 640, 480, 225, 169);
 			}
 			
 			return {
@@ -479,9 +479,9 @@ var NCV = {
 		var getScreenObject = function(part) {
 			var serverUrl = '';
 			if (part.user.id == my.params.userId) {
-				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'producer', 640, 480);
+				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'producer', 640, 480, 640, 480);
 			} else {
-				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'consumer', 640, 480);
+				serverUrl = constructUrl(my.params.serverUrl, part.stream, 'consumer', 640, 480, 640, 480);
 			}
 			
 			return {
@@ -493,8 +493,8 @@ var NCV = {
 			};
 		};
 		
-		var constructUrl = function(url, stream, type, width, height) {
-			return NC.getContextPath() + '/video-client.swf?server=' + url + '&stream=' + stream + '&type=' + type + '&width=' + width +'&height=' + height;
+		var constructUrl = function(url, stream, type, width, height, winWidth, winHeight) {
+			return NC.getContextPath() + '/video-client.swf?server=' + url + '&stream=' + stream + '&type=' + type + '&width=' + width +'&height=' + height + '&winWidth=' + winWidth + '&winHeight=' + winHeight;
 		};
 		
 		var constructObject = function(id, url, width, height, name) {
