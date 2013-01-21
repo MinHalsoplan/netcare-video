@@ -383,6 +383,9 @@ var NCV = {
 			
 			_data.participants.push(part);
 			renderParticipants();
+			
+			$(e.currentTarget).val('');
+			return false;
 		};
 		
 		var renderParticipants = function() {
