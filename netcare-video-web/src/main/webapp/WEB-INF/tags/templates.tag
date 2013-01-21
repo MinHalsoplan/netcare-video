@@ -23,13 +23,13 @@
 <%@ taglib prefix="video" tagdir="/WEB-INF/tags"%>
 
 <script id="bookingItem" type="text/template">
-<li id="booking-item-{{id}}" class="item withNavigation" style="cursor: pointer;">
+<li id="booking-item-{{=id}}" class="item withNavigation" style="cursor: pointer;">
 <mvk:touch-item>
-<div id="booking-{{id}}" class="listItemBase">
+<div id="booking-{{=id}}" class="listItemBase">
 	<div class="row-fluid">
 		<div class="mainBody span6">
-			<h4 class="titel">{{name}}</h4>
-			<div class="subRow">{{start}}</div>
+			<h4 class="titel">{{=name}}</h4>
+			<div class="subRow">{{=start}}</div>
 		</div>
 		<div class="mainBody actionBody span6"></div>
 	</div>
@@ -40,39 +40,39 @@
 </script>
 
 <script id="bookingItemDetails" type="text/template">
-<div id="bo-details-{{id}}" class="item-with-form" style="display: none; margin-right: 15px;">
+<div id="bo-details-{{=id}}" class="item-with-form" style="display: none; margin-right: 15px;">
 	<div class="row-fluid">
 		<div class="span4">
 			Skapad av:
 		</div>
 		<div class="span8">
-			{{createdBy.name}} ({{createdBy.hsaId}})
+			{{=createdBy.name}} ({{=createdBy.hsaId}})
 		</div>
 	</div>
 	<div class="row-fluid">
 		<div class="span4">
 			Deltagare:
 		</div>
-		<div id="participants-{{id}}" class="span8">
+		<div id="participants-{{=id}}" class="span8">
 			
 		</div>
 	</div>
 	<div class="row-fluid">
 		<div class="span12">
-			<a id="show-notes-{{id}}" href="#">Visa anteckningar</a>
+			<a id="show-notes-{{=id}}" href="#">Visa anteckningar</a>
 		</div>
 	</div>
 </div>
 </script>
 
 <script id="adminItem" type="text/template">
-<li id="admin-item-{{id}}" class="item withNavigation" style="cursor: pointer;">
+<li id="admin-item-{{=id}}" class="item withNavigation" style="cursor: pointer;">
 <mvk:touch-item>
-<div id="admin-{{id}}" class="listItemBase">
+<div id="admin-{{=id}}" class="listItemBase">
 	<div class="row-fluid">
 		<div class="mainBody span6">
-			<h4 class="titel">{{name}}</h4>
-			<div class="subRow">{{start}}</div>
+			<h4 class="titel">{{=name}}</h4>
+			<div class="subRow">{{=start}}</div>
 		</div>
 		<div class="mainBody actionBody span6"></div>
 	</div>
@@ -83,22 +83,22 @@
 </script>
 
 <script id="videoThumbnail" type="text/template">
-<div id="thumbnail-{{id}}">
+<div id="thumbnail-{{=id}}">
 	<div class="thumbnail video-participant" style="width: 225px; height: 169px;">
-		<object width="{{width}}" width="{{height}}">
-			<param name="movie" value="{{url}}" />
-			<embed src="{{url}}" type="application/x-shockwave-flash" width="{{width}}" height="{{height}}" />
+		<object width="{{=width}}" width="{{=height}}">
+			<param name="movie" value="{{=url}}" />
+			<embed src="{{=url}}" type="application/x-shockwave-flash" width="{{=width}}" height="{{=height}}" />
 		</object>
 	</div>
 	<div class="caption">
 		<span>
-			<strong>{{name}}</strong> 
+			<strong>{{=name}}</strong> 
 			<small> | </small>
 		</span>
 		<span> 
-			<a id="{{id}}" href="#"><small>Visa i storbild</small></a>
+			<a id="{{=id}}" href="#"><small>Visa i storbild</small></a>
 		</span>
-		<span id="quit-{{id}}" style="display: none;">
+		<span id="quit-{{=id}}" style="display: none;">
 			<small> | </small><a href="#">Avsluta</a>
 		</span>
 	</div>
@@ -106,11 +106,11 @@
 </script>
 
 <script id="videoScreen" type="text/template">
-<div id="star-{{id}}">
-	<div class="thumbnail video-participant" style="width: {{width}}px; height: {{height}}px;">
-		<object width="{{width}}" height="{{height}}">
-			<param name="movie" value="{{url}}" />
-			<embed src="{{url}}" type="application/x-shockwave-flash" width="{{width}}" height="{{height}}"/>
+<div id="star-{{=id}}">
+	<div class="thumbnail video-participant" style="width: {{=width}}px; height: {{=height}}px;">
+		<object width="{{=width}}" height="{{=height}}">
+			<param name="movie" value="{{=url}}" />
+			<embed src="{{=url}}" type="application/x-shockwave-flash" width="{{=width}}" height="{{=height}}"/>
 		</object>
 	</div>
 </div>

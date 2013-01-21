@@ -43,6 +43,7 @@
 <mvk:header title="Videomöte" resourcePath="${resourcePath}" contextPath="${contextPath}">
 	<netcare:css resourcePath="${resourcePath}" />
 	<link rel="stylesheet" href="<c:url value='/css/netcare-video.css' />" type="text/css" />
+	<!--[if lte IE 8]> <link rel="stylesheet" type="text/css" href="<c:url value='/css/netcare-video-ie8.css' />" /> <![endif]-->
 	
 	<netcare:js resourcePath="${resourcePath}"/>
 	<script type="text/javascript" src="${contextPath}/js/netcare-video.js"></script>

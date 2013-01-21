@@ -341,7 +341,7 @@ var NCV = {
 				$('#delete-booking').show();
 			}
 			
-			$('#booking-form :submit').click(function(e) {
+			$('#booking-form').submit(function(e) {
 				e.preventDefault();
 				
 				var url = '/meeting/';
@@ -362,7 +362,7 @@ var NCV = {
 					if (value.careGiver) {
 						display = value.name + ' (' + value.hsaId + ')';
 					} else {
-						display = value.name + ' (' + util.formatCrn(value.civicRegistrationNumber) + ')';
+						display = value.name + ' (' + NC.GLOBAL.formatCrn(value.civicRegistrationNumber) + ')';
 					}
 					
 					return { label : display, value : display, user : value };
