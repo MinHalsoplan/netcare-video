@@ -36,7 +36,7 @@ public class MvkPreAuthenticationCallback extends ServiceSupport implements PreA
 	public UserDetails createMissingUser(AuthenticationResult preAuthenticated) {
 		getLog().info("User {} has not been here before, create the user...", preAuthenticated.getUsername());
 		
-		if (preAuthenticated.isCareGiver()) {
+		if (preAuthenticated.isCareActor()) {
 			
 			getLog().debug("The user is a care giver...");
 			
@@ -86,7 +86,7 @@ public class MvkPreAuthenticationCallback extends ServiceSupport implements PreA
 
 	@Override
 	public UserDetails lookupPrincipal(AuthenticationResult auth) throws UsernameNotFoundException {
-		if (auth.isCareGiver()) {
+		if (auth.isCareActor()) {
 			getLog().debug("The authentication result indicates that the user is a care giver. Check for the user in care giver repository");
 			final CareGiverEntity cg = this.cgRepo.findByHsaId(auth.getUsername());
 			if (cg == null) {

@@ -38,7 +38,11 @@
 	
 		<import resource="classpath*:/netcare-mvk-integration-security-config.xml"/>
 	
-		<security:http pattern="/web/setup*" entry-point-ref="mvkEntryPoint" access-denied-page="/web/security/denied">
+		<security:http 
+		    pattern="/web/setup*" 
+		    entry-point-ref="mvkEntryPoint" 
+		    access-denied-page="/web/security/denied"
+		    authentication-manager-ref="mvkAuthenticationManager">
 			<security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter"/>
 		</security:http>
 	
