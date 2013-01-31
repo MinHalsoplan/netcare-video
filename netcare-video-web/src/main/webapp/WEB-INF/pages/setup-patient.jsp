@@ -28,7 +28,7 @@
 <mvk:page>
 	<mvk:header title="Netcare Video 2.0" resourcePath="/web/resources" contextPath="${pageContext.request.contextPath}">
 		<netcare:js resourcePath="/web/resources" />
-		<script type="text/javascript" src="<c:url value="/js/netcare-video.js" />" />
+		<script type="text/javascript" src="<c:url value="/js/netcare-video.js" />"></script>
 		<script type="text/javascript">
 			$(function() {
 				$('#userForm').submit(function(e) {
@@ -36,6 +36,11 @@
 					
 					var firstName = $('input[name="firstName"]').val();
 					var surName = $('input[name="surName"]').val();
+					
+					if (firstName == "" || surName == "") {
+						alert('Vänligen fyll i både för- och efternamn!');
+						return false;
+					}
 					
 					var ajax = new NC.Ajax();
 					ajax.postWithParams('/user/saveUserData', { firstName : firstName, surName : surName }, function(data) {
@@ -80,9 +85,9 @@
 					</fieldset>
 				</div>
 				<div class="modal-footer">
-					<input class="btn btn-primary" type="submit" value="<spring:message code="setup.proceed" />" />
+					<input class="btn btn-info" type="submit" value="<spring:message code="setup.proceed" />" />
+					</form>	
 				</div>
-			</form>	
 		</div>
 	</body>
 </mvk:page>

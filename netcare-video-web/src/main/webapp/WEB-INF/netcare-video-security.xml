@@ -27,7 +27,6 @@
 
 	<security:http security="none" pattern="/web/resources/**" />
 	<security:http security="none" pattern="/index*" />
-	
 	<security:http security="none" pattern="/web/security/**" />
 	
 	<beans profile="qa">
@@ -46,7 +45,11 @@
 			<security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter"/>
 		</security:http>
 	
-		<security:http use-expressions="true" entry-point-ref="mvkEntryPoint" access-denied-page="/web/security/denied">
+		<security:http 
+		    use-expressions="true" 
+		    entry-point-ref="mvkEntryPoint" 
+		    access-denied-page="/web/security/denied"
+		    authentication-manager-ref="mvkAuthenticationManager">
 			<security:intercept-url pattern="/api/**" access="hasRole('ROLE_PATIENT') or hasRole('ROLE_CAREGIVER')"/>
 			<security:intercept-url pattern="/web/**" access="hasRole('ROLE_PATIENT') or hasRole('ROLE_CAREGIVER')"/>
 			<security:intercept-url pattern="/**" access="hasRole('ROLE_PATIENT') or hasRole('ROLE_CAREGIVER')"/>

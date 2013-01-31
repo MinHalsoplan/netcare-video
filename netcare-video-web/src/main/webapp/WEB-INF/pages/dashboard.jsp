@@ -36,10 +36,11 @@
 		</script>
 	</video:viewHeader>
 	<mvk:body>
+		<c:url var="logoutUrl" value="/web/security/logout" />
 		<mvk:pageHeader title="Videomöte"
 			loggedInUser="${user}"
 			loggedInAsText="Inloggad som : "
-			logoutUrl="/web/security/logout"
+			logoutUrl="${logoutUrl}"
 			logoutText="Logga ut" />
 			
 		<mvk:pageContent>
