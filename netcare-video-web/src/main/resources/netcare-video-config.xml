@@ -33,9 +33,9 @@
 	
 	<beans profile="prod">
 		<context:property-placeholder location="
-			file:${user.home}/.netcare-video-prod/database.properties, 
-			file:${user.home}/.netcare-video-prod/video.properties,
-			file:${user.home}/.netcare-video-prod/mvk.properties"/>
+			file:${user.home}/netcare-video-prod/database.properties, 
+			file:${user.home}/netcare-video-prod/video.properties,
+			file:${user.home}/netcare-video-prod/mvk.properties"/>
 		
 		<context:component-scan base-package="org.callistasoftware.netcare.mvk.authentication.service.impl" />
 		<import resource="classpath*:/netcare-mvk-integration-config.xml"/>
