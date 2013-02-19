@@ -13,10 +13,10 @@
   </properties>
 
   <modules>
+  	<module>netcare-flex-client</module>
+  	<module>netcare-streaming-server</module>
   	<module>netcare-video-deployer</module>
   	<module>netcare-service-core</module>
-  	<module>netcare-streaming-server</module>
-  	<module>netcare-flex-client</module>
   	<module>netcare-video-web</module>
   </modules>
   
