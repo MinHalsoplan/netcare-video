@@ -1,4 +1,4 @@
 netcare-video
 =============
 
-Source code for Videmöte
+Source code for Videomöte
